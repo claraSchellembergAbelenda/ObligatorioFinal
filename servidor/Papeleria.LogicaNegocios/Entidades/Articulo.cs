@@ -26,6 +26,8 @@ namespace Papeleria.LogicaNegocio.Entidades
         {
             _repoitorioArticulo = repositorioArticulo;
         }
+
+        public void estoEsUnaPrueba() { }
         public Articulo(int id,string nombre, string descripcion, string codProveedor, double precioActual, int stock)
         {
             this.id = id;
