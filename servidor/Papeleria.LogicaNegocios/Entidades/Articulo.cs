@@ -79,5 +79,7 @@ namespace Papeleria.LogicaNegocio.Entidades
         }
         //todo:stock mayor que 0
         #endregion
+
+        public bool funcionDePrueba() { return true; }
     }
 }
