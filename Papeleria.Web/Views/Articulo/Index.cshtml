@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Papeleria.LogicaAplicacion.DTOs.ArticuloDTO>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h1>Index</h1>
+@if (!string.IsNullOrEmpty(ViewBag.mensaje))
+{
+    <div class="alert alert-danger">
+        @ViewBag.mensaje
+    </div>
+}
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.codProveedor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.precioActual)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.stock)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(Model!=null){
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.codProveedor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.precioActual)
+            </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.stock)
+                    </td>
+           
+        </tr>
+}}
+    </tbody>
+</table>

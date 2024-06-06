@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "IngresarFecha";
+}
+
+<h1>IngresarFecha</h1>
+
+<h4>Pedido</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="GetPedidosPendientesPorFecha" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label for="fechaPedido" class="control-label">Fecha Pedido:</label>
+                <input type="datetime" id="fechaPedido" name="fecha" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Obtener Pedidos Pendientes" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver al Listado</a>
+</div>

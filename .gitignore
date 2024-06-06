@@ -1,0 +1,12 @@
+
+/Papeleria.AccesoDatos/obj
+/Papeleria.Web/obj
+/Papeleria.LogicaNegocios/obj
+/Papeleria.LogicaAplicacion/obj
+/Papeleria.AccesoDatos/obj
+/.vs
+/Papeleria.AccesoDatos/bin
+/Papeleria.LogicaNegocios/bin
+/Papeleria.LogicaAplicacion/bin
+/Papeleria.Web/bin
+/Papeleria.WebApi/obj

@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "ClientesCuyoPedidoSupereMonto";
+}
+
+<h1>Clientes Cuyo Pedido Supere Monto</h1>
+
+@if (!string.IsNullOrEmpty(ViewBag.mensaje))
+{
+    <div class="alert alert-info" role="alert">
+        @ViewBag.mensaje
+    </div>
+}
+<h4>Pedido</h4>
+<hr />
+<form method="post">
+    <div class="form-group">
+        <label for="monto">Ingrese el Monto</label>
+        <input type="number" name="monto" class="form-control" id="monto" placeholder="Ingrese monto">
+    </div>
+    <button type="submit" class="btn btn-primary">Ingresar monto</button>
+</form>
+
+
+@if (ViewBag.Clientes != null)
+{
+    <h4>Clientes encontrados:</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>razonSocial</th>
+                <th>rut</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cliente in ViewBag.Clientes)
+            {
+                <tr>
+                    <td>@cliente.razonSocial</td>
+                    <td>@cliente.rut</td>
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

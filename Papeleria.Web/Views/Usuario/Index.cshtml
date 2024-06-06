@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Papeleria.LogicaAplicacion.DTOs.UsuarioIndexDTO>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+@if (!string.IsNullOrEmpty(ViewBag.mensaje))
+{
+    <div class="alert alert-danger">
+        @ViewBag.mensaje
+    </div>
+}
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.id)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.apellido)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.email)
+            </th>
+            
+            
+            <th>
+                @Html.DisplayNameFor(model => model.esAdmin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.esEncargado)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.apellido)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+            <td>
+            
+                 @Html.DisplayFor(modelItem => item.esAdmin)
+            </td>
+            <th>
+                @Html.DisplayFor(model => item.esEncargado)
+            </th>
+            <td>
+                @Html.ActionLink("Edit","Edit", new { id=item.id})
+                    |@Html.ActionLink("Details", "Details", new { id = item.id })
+                    |@Html.ActionLink("Delete", "Delete", new { id = item.id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

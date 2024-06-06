@@ -1,0 +1,76 @@
+﻿@model IEnumerable<Papeleria.LogicaAplicacion.DTOs.PedidoDTO>
+
+@{
+    ViewData["Title"] = "GetPedidosPendientesPorFecha";
+}
+
+<h1>Pendidos Pendientes </h1>
+
+<p>
+    <a asp-action="Create">Aqui puedes anular un pedido pendiente de entrega</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.fechaPedido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.precioTotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.descuento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.estadoPedido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fechaEntregaDeseada)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <h2>No hay pedidos pendientes en la fecha ingresada</h2>
+        }
+        else
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fechaPedido)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.cliente.razonSocial)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.precioTotal)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.descuento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.estadoPedido)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fechaEntregaDeseada)
+                    </td>
+                    <td>
+                        <a asp-action="AnularPedido" asp-route-id="@item.id">Anular</a>
+                    </td>
+                </tr>
+            }
+        }
+
+        
+        
+        
+    </tbody>
+</table>
+

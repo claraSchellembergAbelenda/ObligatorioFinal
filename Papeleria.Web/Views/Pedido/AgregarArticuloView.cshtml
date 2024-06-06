@@ -1,0 +1,45 @@
+﻿@model Papeleria.LogicaAplicacion.DTOs.LineaDTO
+
+@{
+    ViewData["Title"] = "AgregarArticulo";
+}
+
+<h1>AgregarArticulo</h1>
+@if (!string.IsNullOrEmpty(ViewBag.mensaje))
+{
+    <div class="alert alert-danger">
+        @ViewBag.mensaje
+    </div>
+}
+<h4>Linea</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AgregarArticulo" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="articuloId" class="control-label"></label>
+                <select asp-for="articuloId" class="form-control">
+                    <option value="">Selecciona un artículo</option>
+                    @foreach (var articulo in ViewBag.Articulos)
+                    {
+                        <option value="@articulo.id">@articulo.nombre - UYU @articulo.precioActual</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="cantUnidades" class="control-label"></label>
+                <input asp-for="cantUnidades" class="form-control" />
+                <span asp-validation-for="cantUnidades" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Agregar Articulo" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -1,0 +1,66 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Papeleria.Web", "Papeleria.Web\Papeleria.Web.csproj", "{61D11AD7-268F-4093-AD6F-177EED6B3FE3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4A131490-819B-4089-A6C7-43B93484DB0B} = {4A131490-819B-4089-A6C7-43B93484DB0B}
+		{8D88EAF4-F203-4532-8C45-75EB4456A4EC} = {8D88EAF4-F203-4532-8C45-75EB4456A4EC}
+		{98120A1D-07A1-45B1-A8CF-E59B72F92BAC} = {98120A1D-07A1-45B1-A8CF-E59B72F92BAC}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Papeleria.LogicaNegocios", "Papeleria.LogicaNegocios\Papeleria.LogicaNegocios.csproj", "{4A131490-819B-4089-A6C7-43B93484DB0B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Papeleria.LogicaAplicacion", "Papeleria.LogicaAplicacion\Papeleria.LogicaAplicacion.csproj", "{98120A1D-07A1-45B1-A8CF-E59B72F92BAC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4A131490-819B-4089-A6C7-43B93484DB0B} = {4A131490-819B-4089-A6C7-43B93484DB0B}
+		{8D88EAF4-F203-4532-8C45-75EB4456A4EC} = {8D88EAF4-F203-4532-8C45-75EB4456A4EC}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Papeleria.AccesoDatos", "Papeleria.AccesoDatos\Papeleria.AccesoDatos.csproj", "{8D88EAF4-F203-4532-8C45-75EB4456A4EC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4A131490-819B-4089-A6C7-43B93484DB0B} = {4A131490-819B-4089-A6C7-43B93484DB0B}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Papeleria.WebApi", "Papeleria.WebApi\Papeleria.WebApi.csproj", "{ED5855F7-F877-4612-9B28-B18243433692}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4A131490-819B-4089-A6C7-43B93484DB0B} = {4A131490-819B-4089-A6C7-43B93484DB0B}
+		{8D88EAF4-F203-4532-8C45-75EB4456A4EC} = {8D88EAF4-F203-4532-8C45-75EB4456A4EC}
+		{98120A1D-07A1-45B1-A8CF-E59B72F92BAC} = {98120A1D-07A1-45B1-A8CF-E59B72F92BAC}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{61D11AD7-268F-4093-AD6F-177EED6B3FE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61D11AD7-268F-4093-AD6F-177EED6B3FE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61D11AD7-268F-4093-AD6F-177EED6B3FE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61D11AD7-268F-4093-AD6F-177EED6B3FE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A131490-819B-4089-A6C7-43B93484DB0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A131490-819B-4089-A6C7-43B93484DB0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A131490-819B-4089-A6C7-43B93484DB0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A131490-819B-4089-A6C7-43B93484DB0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98120A1D-07A1-45B1-A8CF-E59B72F92BAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98120A1D-07A1-45B1-A8CF-E59B72F92BAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98120A1D-07A1-45B1-A8CF-E59B72F92BAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98120A1D-07A1-45B1-A8CF-E59B72F92BAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D88EAF4-F203-4532-8C45-75EB4456A4EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D88EAF4-F203-4532-8C45-75EB4456A4EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D88EAF4-F203-4532-8C45-75EB4456A4EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D88EAF4-F203-4532-8C45-75EB4456A4EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED5855F7-F877-4612-9B28-B18243433692}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED5855F7-F877-4612-9B28-B18243433692}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED5855F7-F877-4612-9B28-B18243433692}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED5855F7-F877-4612-9B28-B18243433692}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F1F94431-EA51-49CB-B0A0-28365E56A228}
+	EndGlobalSection
+EndGlobal

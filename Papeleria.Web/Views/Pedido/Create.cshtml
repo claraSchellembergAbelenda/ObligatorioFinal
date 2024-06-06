@@ -1,0 +1,87 @@
+﻿@using Papeleria.LogicaAplicacion.DTOs
+@model Papeleria.LogicaAplicacion.DTOs.PedidoDTO
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+@if (!string.IsNullOrEmpty(ViewBag.mensaje))
+{
+    <div class="alert alert-danger">
+        @ViewBag.mensaje
+    </div>
+}
+
+<h4>Pedido</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <h2>Articulos:</h2>
+            @if (ViewBag._tempListaLinea != null && ViewBag._tempListaLinea.Count > 0)
+            {
+                @foreach (LineaDTO linea in ViewBag._tempListaLinea)
+                {
+                    <p>@linea.articulo.nombre - cantidad: @linea.cantUnidades - UYU @linea.precioLinea</p>
+
+                }
+            }
+            <p>Subtotal: @ViewBag.Subtotal</p>
+            <form asp-action="AgregarArticuloView">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <input type="submit" value="Agregar Articulo" class="btn btn-primary" />
+                </div>
+            </form>
+        <form asp-action="Create">
+
+                    <div class="form-group">
+                        <label asp-for="clienteId" class="control-label"></label>
+                        <select asp-for="clienteId" class="form-control">
+                            <option value="">Selecciona un Cliente</option>
+                            @foreach (var cliente in ViewBag.Clientes)
+                            {
+                                <option value="@cliente.id">@cliente.nombre</option>
+                            }
+                        </select>
+                    </div>
+         
+
+
+            
+            <div class="form-group">
+                <label asp-for="descuento" class="control-label"></label>
+                <input asp-for="descuento" class="form-control" />
+                <span asp-validation-for="descuento" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="fechaEntregaDeseada" class="control-label"></label>
+                <input asp-for="fechaEntregaDeseada" class="form-control" />
+                <span asp-validation-for="fechaEntregaDeseada" class="text-danger"></span>
+            </div>
+            <div>
+                <label for="select">Elija que pedido desea(el express tiene 10% de recargo o 15% si es delivery en el mismo dia)</label>
+                <select asp-for="pedidoElegido">
+                    <option value="pedidoExpress">Pedido express(llega entre 1 y 5 dias)</option>
+                    <option value="pedidoComun">Pedido comun(5% de recargo si la distancia es mayor a 100km), llega a partir de la semana de encargado</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+    <div>
+        
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

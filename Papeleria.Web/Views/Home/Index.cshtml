@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@{
+    string correo = ViewContext.HttpContext.Session.GetString("LogueadoCorreo");
+}
+<div class="text-center">
+    @if (!string.IsNullOrEmpty(ViewBag.mensaje))
+    {
+        <div class="alert alert-danger">
+            @ViewBag.mensaje
+        </div>
+    }
+    <h1 class="display-4">Papeleria</h1>
+    @if (!string.IsNullOrEmpty(Context.Session.GetString("LogueadoCorreo")))
+    {
+        <p>Bienvenido a nuestra pagina </p>
+
+        @ViewContext.HttpContext.Session.GetString("LogueadoCorreo")
+
+    }
+    else
+    {
+        <p>Inicia Sesiòn para continuar </p>
+    }
+    
+</div>
+                                  
