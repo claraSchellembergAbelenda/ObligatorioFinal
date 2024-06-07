@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.VisualBasic;
 using Papeleria.LogicaNegocio.Entidades;
 using Papeleria.LogicaNegocios.Entidades;
@@ -18,15 +19,17 @@ namespace Papeleria.AccesoDatos.EntityFramework.Repositorios
         {
             this._context = new PapeleriaContext();
         }
-        public IEnumerable<MovimientoStock> GetPorTipoYArticulo(int idArticulo, string tipoMovimiento)
+
+        public IEnumerable<MovimientoStock> GetPorTipoYArticulo(int idArticulo, string tipo)
         {
             return _context.MovimientosStock
-                            .Where(m => m.articuloMovidoId == idArticulo && m.tipoMovimiento.Equals( tipoMovimiento))
-                            .orderByDescending(m => m.fechaYHora)
+                            .Where(ms => ms.articuloMovidoId == idArticulo && ms.tipoMovimiento.nombreMovimiento.Equals(tipo))
+                            .OrderByDescending(ms => ms.fechaYHora)
+                            .ThenBy(ms => ms.cantUnidadesMovidas)
+                            .Include(ms => ms.tipoMovimiento);
 
-                            .groupBy(m.cantUniddadesMovidas)
-                            .include(m.tipoMovimiento)
-}
+        }
+
         public IEnumerable<Articulo> GetArticuloPorFechaMovimiento(DateTime f1, DateTime f2)
         {
             return _context.MovimientosStock.Where(mv => mv.fechaYHora >= f1 && mv.fechaYHora <= f2)
@@ -39,7 +42,8 @@ namespace Papeleria.AccesoDatos.EntityFramework.Repositorios
 
         //public IEnumerable<MovimientoStock> GetResumenAgrupadoPorTipoYAño()
         //{
-        //    return _context.MovimientosStock.GroupBy(mv=> mv.fechaYHora.Year).
+        //    return _context.MovimientosStock.Select(mv => mv)
+        //                                    .GroupBy(mv=>mv.fechaYHora.Year)
         //}
 
         public bool Add(MovimientoStock aAgregar)
@@ -66,5 +70,6 @@ namespace Papeleria.AccesoDatos.EntityFramework.Repositorios
         {
             throw new NotImplementedException();
         }
+
     }
 }
