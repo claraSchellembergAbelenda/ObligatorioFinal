@@ -1,5 +1,6 @@
 ﻿using Papeleria.LogicaNegocio.Entidades;
 using Papeleria.LogicaNegocio.InterfacesEntidades;
+using Papeleria.LogicaNegocios.Exceptions.MovimientoStock;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -29,9 +30,26 @@ namespace Papeleria.LogicaNegocios.Entidades
 
         public MovimientoStock() { }
 
+        public MovimientoStock(int id, DateTime fechaYHora, Articulo articuloMovido, TipoMovimiento tipoMovimiento, Usuario usuario, int cantUnidadesMovidas)
+        {
+            this.id = id;
+            this.fechaYHora = fechaYHora;
+            this.articuloMovido = articuloMovido;
+            this.tipoMovimiento = tipoMovimiento;
+            this.usuario = usuario;
+            this.cantUnidadesMovidas = cantUnidadesMovidas;
+        }
+
         public void EsValido()
         {
-            throw new NotImplementedException();
+            ValidarStock();
+        }
+        public void ValidarStock()
+        {
+            if(cantUnidadesMovidas<=0)
+            {
+                throw new MovimientoStockNoValidoException("Las unidades que desea mover no pueden ser negativas o 0");
+            }
         }
     }
 }

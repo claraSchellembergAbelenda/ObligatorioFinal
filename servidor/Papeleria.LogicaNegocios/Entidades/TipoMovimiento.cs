@@ -17,6 +17,11 @@ namespace Papeleria.LogicaNegocios.Entidades
         public int id {  get; set; }
         public string nombreMovimiento { get; set; }
         public TipoMovimiento() { }
+        public TipoMovimiento(int id, string nombreMovimiento)
+        {
+            this.id = id;
+            this.nombreMovimiento = nombreMovimiento;
+        }
 
         public void EsValido()
         {
