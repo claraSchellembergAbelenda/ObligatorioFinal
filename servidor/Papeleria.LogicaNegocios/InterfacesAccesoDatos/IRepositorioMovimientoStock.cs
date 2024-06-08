@@ -1,4 +1,5 @@
-﻿using Papeleria.LogicaNegocio.InterfacesAccesoDatos;
+﻿using Papeleria.LogicaNegocio.Entidades;
+using Papeleria.LogicaNegocio.InterfacesAccesoDatos;
 using Papeleria.LogicaNegocios.Entidades;
 using System;
 using System.Collections.Generic;
@@ -10,5 +11,7 @@ namespace Papeleria.LogicaNegocios.InterfacesAccesoDatos
 {
     public interface IRepositorioMovimientoStock : IRepositorio<MovimientoStock>
     {
+        public IEnumerable<Articulo> GetArticuloPorFechaMovimiento(DateTime f1, DateTime f2);
+        public IEnumerable<MovimientoStock> GetPorTipoYArticulo(int idArticulo, string tipo);
     }
 }
