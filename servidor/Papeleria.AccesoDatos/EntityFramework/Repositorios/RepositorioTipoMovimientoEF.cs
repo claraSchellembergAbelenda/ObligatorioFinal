@@ -20,7 +20,20 @@ namespace Papeleria.AccesoDatos.EntityFramework.Repositorios
         
         public bool Add(TipoMovimiento aAgregar)
         {
-            throw new NotImplementedException();
+            try
+            {
+                this._context.TiposDeMovimientos.Add(aAgregar);
+                this._context.SaveChanges();
+                return true;
+            }
+            //catch (TipoNotValidException e)
+            //{
+            //    throw e;
+            //}
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public IEnumerable<TipoMovimiento> FindAll()
