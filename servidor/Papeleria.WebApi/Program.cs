@@ -57,7 +57,12 @@ namespace Papeleria.WebApi
             builder.Services.AddScoped<IBuscarEnClientesCU, BuscarEnClientesCU>();
             builder.Services.AddScoped<ICrearClienteCU, CrearClienteCU>();
             builder.Services.AddScoped<IGetClientesCU, GetClientesCU>();
+
             builder.Services.AddScoped<ICrearTipoMovimientoCU, CrearTipoMovimientoCU>();
+            builder.Services.AddScoped<IEliminarTipoMovimientoCU, EliminarTipoMovimientoCU>();
+            builder.Services.AddScoped<IUpdateTipoMovientoCU, UpdateTipoMovimientoCU>();
+            builder.Services.AddScoped<IFindTipoMovimientoCU, FindTipoMovimientoCU>();
+            builder.Services.AddScoped<IGetTiposMovimientoCU, GetTiposMovimientoCU>();
 
 
 

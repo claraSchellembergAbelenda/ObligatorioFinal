@@ -1,4 +1,5 @@
-﻿using Papeleria.LogicaNegocio.InterfacesAccesoDatos;
+﻿using Microsoft.EntityFrameworkCore;
+using Papeleria.LogicaNegocio.InterfacesAccesoDatos;
 using Papeleria.LogicaNegocios.Entidades;
 using System;
 using System.Collections.Generic;
@@ -10,5 +11,6 @@ namespace Papeleria.LogicaNegocios.InterfacesAccesoDatos
 {
     public interface IRepositorioTipoMovimiento : IRepositorio<TipoMovimiento>
     {
+        
     }
 }

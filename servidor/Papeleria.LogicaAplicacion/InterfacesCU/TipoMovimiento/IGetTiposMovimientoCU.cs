@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Papeleria.LogicaAplicacion.InterfacesCU.TipoMovimiento
 {
-    public interface IEliminarTipoMovimientoCU
+    public interface IGetTiposMovimientoCU
     {
-        public void EliminarTipoMovimiento(int idAEliminar);
+        public IEnumerable<TipoMovimientoDTO> GetTipoMovimientos();
     }
 }
