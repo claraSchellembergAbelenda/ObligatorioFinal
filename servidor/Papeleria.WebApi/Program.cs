@@ -13,6 +13,8 @@ using Papeleria.LogicaNegocio.InterfacesAccesoDatos;
 using Papeleria.LogicaAplicacion.InterfacesCU.TipoMovimiento;
 using Papeleria.LogicaAplicacion.CasosDeUso.TipoMovimiento;
 using Papeleria.LogicaNegocios.InterfacesAccesoDatos;
+using Papeleria.LogicaAplicacion.CasosDeUso.MovimientoStock;
+using Papeleria.LogicaAplicacion.InterfacesCU.MovimientoStock;
 
 namespace Papeleria.WebApi
 {
@@ -34,6 +36,7 @@ namespace Papeleria.WebApi
             builder.Services.AddScoped<IRepositorioPedido, RepositorioPedidoEF>();
             builder.Services.AddScoped<IRepositorioLinea, RepositorioLineaEF>();
             builder.Services.AddScoped<IRepositorioTipoMovimiento, RepositorioTipoMovimientoEF>();
+            builder.Services.AddScoped<IRepositorioMovimientoStock, RepositorioMovimientoStockEF>();
 
 
             // Caso de uso
@@ -63,6 +66,7 @@ namespace Papeleria.WebApi
             builder.Services.AddScoped<IUpdateTipoMovientoCU, UpdateTipoMovimientoCU>();
             builder.Services.AddScoped<IFindTipoMovimientoCU, FindTipoMovimientoCU>();
             builder.Services.AddScoped<IGetTiposMovimientoCU, GetTiposMovimientoCU>();
+            builder.Services.AddScoped<IExisteTipoCU, ExisteTipoCU>();
 
 
 

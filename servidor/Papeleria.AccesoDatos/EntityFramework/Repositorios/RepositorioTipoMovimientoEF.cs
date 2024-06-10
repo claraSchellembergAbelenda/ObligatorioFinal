@@ -44,7 +44,7 @@ namespace Papeleria.AccesoDatos.EntityFramework.Repositorios
 
         public TipoMovimiento FindByID(int id)
         {
-            return _context.TiposDeMovimientos.Where(usuario => usuario.id == id).AsNoTracking().FirstOrDefault();
+            return _context.TiposDeMovimientos.Where(tp => tp.id == id).AsNoTracking().FirstOrDefault();
         }
         
 

@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Papeleria.LogicaAplicacion.CasosDeUso.MovimientoStock;
 using Papeleria.LogicaAplicacion.CasosDeUso.TipoMovimiento;
 using Papeleria.LogicaAplicacion.DTOs;
+using Papeleria.LogicaAplicacion.InterfacesCU.MovimientoStock;
 using Papeleria.LogicaAplicacion.InterfacesCU.TipoMovimiento;
 using Papeleria.LogicaAplicacion.Mappers;
 using Papeleria.LogicaNegocios.Exceptions.TipoMovimiento;
@@ -17,13 +19,16 @@ namespace Papeleria.WebApi.Controllers
         private IUpdateTipoMovientoCU _updateTipoMovimientoCU;
         private IGetTiposMovimientoCU _getTiposMovimientoCU;
         private IFindTipoMovimientoCU _findTipoMovimientoCU;
-        public TipoMovimientoController(ICrearTipoMovimientoCU crearTipoMovimientoCU, IEliminarTipoMovimientoCU eliminarTipoMovimientoCU, IUpdateTipoMovientoCU updateTipoMovientoCU, IGetTiposMovimientoCU getTiposMovimientoCU, IFindTipoMovimientoCU findTipoMovimientoCU)
+        private IExisteTipoCU _existeTipoCU;
+        public TipoMovimientoController(ICrearTipoMovimientoCU crearTipoMovimientoCU, IEliminarTipoMovimientoCU eliminarTipoMovimientoCU, IUpdateTipoMovientoCU updateTipoMovientoCU, IGetTiposMovimientoCU getTiposMovimientoCU, IFindTipoMovimientoCU findTipoMovimientoCU, IExisteTipoCU existeTipoCU)
         {
             _crearTipoMovimientoCU = crearTipoMovimientoCU;
             _eliminarTipoMovimientoCU = eliminarTipoMovimientoCU;
             _updateTipoMovimientoCU = updateTipoMovientoCU;
             _getTiposMovimientoCU = getTiposMovimientoCU;
             _findTipoMovimientoCU = findTipoMovimientoCU;
+            _existeTipoCU = existeTipoCU;
+
 
         }
 
@@ -82,23 +87,34 @@ namespace Papeleria.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<TipoMovimientoDTO> Delete(int id)
         {
+            
+            var aEliminar = _findTipoMovimientoCU.FindTipoMovimiento(id);
+            string tipo = aEliminar.nombreMovimiento;
 
-            //recorrer la lista de movimientos con un caso de uso 
-            //si el movimiento esta en la lista no se agrega
-            try
+            
+
+
+            if (_existeTipoCU.ExisteTipo(tipo))
             {
-                _eliminarTipoMovimientoCU.EliminarTipoMovimiento(id);
-                return Ok();
-
+                return BadRequest("No puede eliminar un tipo de movimiento en uso");
             }
-            catch (TipoMovimientoNoValidoException ex)
+            else
             {
-                return BadRequest(ex.Message);
-            }
+                try
+                {
+                    _eliminarTipoMovimientoCU.EliminarTipoMovimiento(id);
+                    return Ok();
 
-            catch (Exception ex)
-            {
-                return BadRequest("Error inesperado con la base de datos");
+                }
+                catch (TipoMovimientoNoValidoException ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+
+                catch (Exception ex)
+                {
+                    return BadRequest("Error inesperado con la base de datos");
+                }
             }
 
 

@@ -58,7 +58,7 @@ namespace Papeleria.AccesoDatos.EntityFramework.Repositorios
 
         public MovimientoStock FindByID(int id)
         {
-            throw new NotImplementedException();
+            return _context.MovimientosStock.Where(m => m.id == id).AsNoTracking().FirstOrDefault();
         }
 
         public bool Remove(int id)
@@ -70,6 +70,14 @@ namespace Papeleria.AccesoDatos.EntityFramework.Repositorios
         {
             throw new NotImplementedException();
         }
+        public bool ExisteTipo(string tipo) {
 
+            if(_context.MovimientosStock.Any(m => m.tipoMovimiento.nombreMovimiento == tipo))
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }
