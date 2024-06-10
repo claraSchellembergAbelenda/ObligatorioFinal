@@ -34,7 +34,7 @@ namespace Papeleria.WebApi.Controllers
             return Ok(_getTiposMovimientoCU.GetTipoMovimientos());
         }
 
-        [HttpGet("{tipoMovimientoId}/")]
+        [HttpGet("{id}/")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -59,8 +59,10 @@ namespace Papeleria.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<TipoMovimientoDTO> Create(TipoMovimientoDTO TipoMovimientoDTO)
         {
+            
             try
             {
+                
                 _crearTipoMovimientoCU.CrearTipoMovimiento(TipoMovimientoDTO);
                 return Created("api/TipoMovimiento", TipoMovimientoDTO);
             }
@@ -80,6 +82,9 @@ namespace Papeleria.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<TipoMovimientoDTO> Delete(int id)
         {
+
+            //recorrer la lista de movimientos con un caso de uso 
+            //si el movimiento esta en la lista no se agrega
             try
             {
                 _eliminarTipoMovimientoCU.EliminarTipoMovimiento(id);
