@@ -1,4 +1,5 @@
-﻿using Papeleria.LogicaNegocios.Entidades;
+﻿using Papeleria.LogicaNegocio.Entidades;
+using Papeleria.LogicaNegocios.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,11 @@ namespace Papeleria.LogicaAplicacion.DTOs
 
         public TipoMovimientoDTO(TipoMovimiento tp)
         {
+            if (tp != null)
+            {
+                id = tp.id;
+                nombreMovimiento=tp.nombreMovimiento;
+            }
         }
     }
 }
