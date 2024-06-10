@@ -28,6 +28,7 @@ namespace Papeleria.LogicaAplicacion.DTOs
             {
                 id = tp.id;
                 nombreMovimiento=tp.nombreMovimiento;
+                esPositivo = tp.esPositivo;
             }
         }
     }
