@@ -1,0 +1,15 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<form method="post" asp-action="GetMovimientosPorFechas">
+        <div>
+            <label for="fecha1">Ingrese una fecha de comienzo</label>
+            <input type="date"  id="fecha1" name="f1" v-model="value" class="mb-2"></input>
+            <label for="fecha2">Ingrese una fecha final</label>
+            <input type="date" id="fecha2" name="f2" v-model="value" class="mb-2"></input>
+            <input type="submit" value="ingresar fechas"/>
+        </div>
+</form>

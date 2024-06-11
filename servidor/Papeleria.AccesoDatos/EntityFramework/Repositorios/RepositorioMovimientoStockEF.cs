@@ -4,6 +4,7 @@ using Microsoft.VisualBasic;
 using Papeleria.LogicaNegocio.Entidades;
 using Papeleria.LogicaNegocios.Entidades;
 using Papeleria.LogicaNegocios.InterfacesAccesoDatos;
+using Papeleria.LogicaNegocios.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,8 +38,12 @@ namespace Papeleria.AccesoDatos.EntityFramework.Repositorios
                 .Select(a => a.articuloMovido);
         }
 
+
+
         //c.Obtener la información de resumen de las cantidades movidas agrupadas por año, y
         //dentro de año por tipo de movimiento.
+
+
 
         //public IEnumerable<MovimientoStock> GetResumenAgrupadoPorTipoYAño()
         //{
