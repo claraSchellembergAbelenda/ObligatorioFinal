@@ -16,11 +16,13 @@ namespace Papeleria.LogicaNegocios.Entidades
         //de registrar tipos de movimiento que no impliquen un cambio en el stock.
         public int id {  get; set; }
         public string nombreMovimiento { get; set; }
+        public bool esPositivo { get; set; }
         public TipoMovimiento() { }
-        public TipoMovimiento(int id, string nombreMovimiento)
+        public TipoMovimiento(int id, string nombreMovimiento, bool esPositivo)
         {
             this.id = id;
             this.nombreMovimiento = nombreMovimiento;
+            this.esPositivo = esPositivo;
         }
 
         public void EsValido()

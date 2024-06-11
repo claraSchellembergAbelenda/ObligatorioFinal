@@ -13,5 +13,6 @@ namespace Papeleria.LogicaNegocios.InterfacesAccesoDatos
     {
         public IEnumerable<Articulo> GetArticuloPorFechaMovimiento(DateTime f1, DateTime f2);
         public IEnumerable<MovimientoStock> GetPorTipoYArticulo(int idArticulo, string tipo);
+        public bool ExisteTipo(string tipo);
     }
 }

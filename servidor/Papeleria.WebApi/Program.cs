@@ -10,6 +10,11 @@ using Papeleria.LogicaAplicacion.InterfacesCU.Pedidos;
 using Papeleria.LogicaAplicacion.InterfacesCU.Usuarios;
 using Papeleria.LogicaAplicacion.InterfacesUC;
 using Papeleria.LogicaNegocio.InterfacesAccesoDatos;
+using Papeleria.LogicaAplicacion.InterfacesCU.TipoMovimiento;
+using Papeleria.LogicaAplicacion.CasosDeUso.TipoMovimiento;
+using Papeleria.LogicaNegocios.InterfacesAccesoDatos;
+using Papeleria.LogicaAplicacion.CasosDeUso.MovimientoStock;
+using Papeleria.LogicaAplicacion.InterfacesCU.MovimientoStock;
 using Papeleria.LogicaNegocios.InterfacesAccesoDatos;
 using Papeleria.LogicaAplicacion.InterfacesCU.MovimientoStock;
 using Papeleria.LogicaAplicacion.CasosDeUso.MovimientoStock;
@@ -33,7 +38,6 @@ namespace Papeleria.WebApi
             builder.Services.AddScoped<IRepositorioCliente, RepositorioClienteEF>();
             builder.Services.AddScoped<IRepositorioPedido, RepositorioPedidoEF>();
             builder.Services.AddScoped<IRepositorioLinea, RepositorioLineaEF>();
-            builder.Services.AddScoped<IRepositorioMovimientoStock, RepositorioMovimientoStockEF>();
 
 
             // Caso de uso
@@ -57,9 +61,6 @@ namespace Papeleria.WebApi
             builder.Services.AddScoped<IBuscarEnClientesCU, BuscarEnClientesCU>();
             builder.Services.AddScoped<ICrearClienteCU, CrearClienteCU>();
             builder.Services.AddScoped<IGetClientesCU, GetClientesCU>();
-
-
-            builder.Services.AddScoped<IGetPorTipoMovimientoYArticuloCU, GetPorTipoMovimientoYArticuloCU>();
 
             var app = builder.Build();
 

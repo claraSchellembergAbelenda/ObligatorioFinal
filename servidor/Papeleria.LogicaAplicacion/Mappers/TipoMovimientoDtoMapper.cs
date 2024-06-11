@@ -18,7 +18,7 @@ namespace Papeleria.LogicaAplicacion.Mappers
             {
                 throw new TipoMovimientoNoValidoException("Articulo es null");
             }
-            return new TipoMovimiento(dto.id, dto.nombreMovimiento);
+            return new TipoMovimiento(dto.id, dto.nombreMovimiento, dto.esPositivo);
         }
     }
 }

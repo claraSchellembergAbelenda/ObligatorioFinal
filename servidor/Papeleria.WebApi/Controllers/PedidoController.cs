@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Papeleria.LogicaAplicacion.DTOs;
 using Papeleria.LogicaAplicacion.InterfacesCU.Pedidos;
+using Papeleria.LogicaNegocios.Entidades;
 
 namespace Papeleria.WebApi.Controllers
 {
@@ -21,10 +22,15 @@ namespace Papeleria.WebApi.Controllers
             {
                 return Ok(this._getPedidosAnuladosDescCU.GetPedidosAnuladosDesc().ToList());
             }
+            //catch(TipoMovimientoNotValidException texto) 
+            //{
+            //    return BadRequest(texto.mensaje);
+            //}
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest("Error inesperado con la base de datos");
             }
+            
         }
     }
 }

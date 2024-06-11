@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Papeleria.LogicaNegocio.Entidades;
+using Papeleria.LogicaNegocio.Exceptions.Usuario;
 using Papeleria.LogicaNegocios.Entidades;
 using Papeleria.LogicaNegocios.InterfacesAccesoDatos;
 using System;
@@ -20,27 +21,74 @@ namespace Papeleria.AccesoDatos.EntityFramework.Repositorios
         
         public bool Add(TipoMovimiento aAgregar)
         {
-            throw new NotImplementedException();
+            try
+            {
+                this._context.TiposDeMovimientos.Add(aAgregar);
+                this._context.SaveChanges();
+                return true;
+            }
+            //catch (TipoNotValidException e)
+            //{
+            //    throw e;
+            //}
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public IEnumerable<TipoMovimiento> FindAll()
         {
-            throw new NotImplementedException();
+            return _context.TiposDeMovimientos;
         }
 
         public TipoMovimiento FindByID(int id)
         {
-            throw new NotImplementedException();
+            return _context.TiposDeMovimientos.Where(tp => tp.id == id).AsNoTracking().FirstOrDefault();
         }
+        
 
         public bool Remove(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                TipoMovimiento aRemover = _context.TiposDeMovimientos.Where(t => t.id == id)
+                    .FirstOrDefault();
+                if (aRemover == null)
+                {
+                    return false;
+                }
+                _context.TiposDeMovimientos.Remove(aRemover);
+                _context.SaveChanges();
+                return true;
+            }
+            //catch (TipoDeMovimientoNoValidoException ex)
+            //{
+            //    throw ex;
+            //}
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public bool Update(TipoMovimiento aModificar)
         {
-            throw new NotImplementedException();
+            try
+            {
+                //aModificar.EsValido();
+                _context.TiposDeMovimientos.Update(aModificar);
+                _context.SaveChanges();
+                return true;
+            }
+            //catch (TipoDeMovimientoNoValidoException ex)
+            //{
+            //    throw ex;
+            //}
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }
