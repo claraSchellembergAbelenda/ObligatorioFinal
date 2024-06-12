@@ -12,7 +12,7 @@ namespace Deposito.Presentacion.Controllers
         {
 
             cliente = new HttpClient();
-            baseURL = "https://localhost:7039/api/MovimientoStock/";
+            baseURL = "https://localhost:7032/api/MovimientoStock/";
         }
 
         public ActionResult GetMovimientosPorFechas()
@@ -24,7 +24,9 @@ namespace Deposito.Presentacion.Controllers
         {
             try
             {
-                HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Get, new Uri(baseURL + "Filtrar/" + f1 +"/"+ f2));
+                string inicio = f1.ToString("MM-dd-yyyy");
+                string fin = f2.ToString("MM-dd-yyyy");
+                HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Get, new Uri(baseURL + "Filtrar?fechaInicio=" + inicio +"&fechafin="+ fin));
                 Task<HttpResponseMessage> respuesta = cliente.SendAsync(solicitud);
                 respuesta.Wait();
                 if (respuesta.Result.IsSuccessStatusCode)

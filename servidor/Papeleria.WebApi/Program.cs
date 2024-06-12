@@ -38,6 +38,8 @@ namespace Papeleria.WebApi
             builder.Services.AddScoped<IRepositorioCliente, RepositorioClienteEF>();
             builder.Services.AddScoped<IRepositorioPedido, RepositorioPedidoEF>();
             builder.Services.AddScoped<IRepositorioLinea, RepositorioLineaEF>();
+            builder.Services.AddScoped<IRepositorioMovimientoStock, RepositorioMovimientoStockEF>();
+
 
 
             // Caso de uso
@@ -61,6 +63,12 @@ namespace Papeleria.WebApi
             builder.Services.AddScoped<IBuscarEnClientesCU, BuscarEnClientesCU>();
             builder.Services.AddScoped<ICrearClienteCU, CrearClienteCU>();
             builder.Services.AddScoped<IGetClientesCU, GetClientesCU>();
+            
+            builder.Services.AddScoped<IGetPorTipoMovimientoYArticuloCU, GetPorTipoMovimientoYArticuloCU>();
+            builder.Services.AddScoped<IGetArticuloPorFechaMovimiento, GetArticuloPorFechaMovimientoCU>();
+            builder.Services.AddScoped<IGetResumeByYearAndTypeUC, ObtenerResumenMovimientoPorAñoCU>();
+            builder.Services.AddScoped<IExisteTipoCU, ExisteTipoCU>();
+            builder.Services.AddScoped<IFindByIDArticuloCU, FindByIdArticuloCU>();
 
             var app = builder.Build();
 

@@ -76,17 +76,19 @@ namespace Papeleria.WebApi.Controllers
 
 
 
-        [HttpGet("Filtrar/{fechaInicio}/{fechaFin}")]
+        [HttpGet("Filtrar")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 
-        public ActionResult GetArticulosPorFecha( DateTime fechaInicio, DateTime fechaFin)
+        public ActionResult GetArticulosPorFecha( string fechaInicio, string fechaFin)
         {
             try
             {
-                return Ok(_getArticuloPorFechaMovimiento.GetArticuloPorFechas(fechaInicio, fechaFin));
+                DateTime inicio = DateTime.Parse(fechaInicio);
+                DateTime fin = DateTime.Parse(fechaFin);
+                return Ok(_getArticuloPorFechaMovimiento.GetArticuloPorFechas(inicio, fin));
 
             }
             catch(Exception ex)
@@ -114,80 +116,6 @@ namespace Papeleria.WebApi.Controllers
             catch (Exception e)
             {
                 return BadRequest(e.Message);
-            }
-        }
-
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        // GET: MovimientoStockController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: MovimientoStockController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: MovimientoStockController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: MovimientoStockController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: MovimientoStockController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: MovimientoStockController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: MovimientoStockController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
             }
         }
     }

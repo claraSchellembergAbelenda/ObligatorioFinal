@@ -12,10 +12,10 @@ namespace Papeleria.LogicaAplicacion.DTOs
     {
         public int id { get; set; }
         public string nombreMovimiento { get; set; }
-        public bool esPositivo { get; set; }
+        public int esPositivo { get; set; }
 
         public TipoMovimientoDTO() { }
-        public TipoMovimientoDTO(int id, string nombreMovimiento, bool esPositivo)
+        public TipoMovimientoDTO(int id, string nombreMovimiento, int esPositivo)
         {
             this.id = id;
             this.nombreMovimiento = nombreMovimiento;
