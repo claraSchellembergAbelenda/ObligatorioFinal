@@ -1,7 +1,6 @@
 ﻿using Deposito.Presentacion.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using NuGet.Protocol;
 
 namespace Deposito.Presentacion.Controllers
 {
@@ -25,7 +24,7 @@ namespace Deposito.Presentacion.Controllers
         {
             try
             {
-                HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Get, new Uri(baseURL + "/Filtrar/" + f1 +"/"+ f2));
+                HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Get, new Uri(baseURL + "Filtrar/" + f1 +"/"+ f2));
                 Task<HttpResponseMessage> respuesta = cliente.SendAsync(solicitud);
                 respuesta.Wait();
                 if (respuesta.Result.IsSuccessStatusCode)

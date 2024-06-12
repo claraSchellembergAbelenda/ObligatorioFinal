@@ -43,13 +43,44 @@ namespace Papeleria.LogicaNegocios.Entidades
         public void EsValido()
         {
             ValidarStock();
+            ValidarArticulo();
         }
         public void ValidarStock()
         {
             if(cantUnidadesMovidas<=0)
             {
-                throw new MovimientoStockNoValidoException("Las unidades que desea mover no pueden ser negativas o 0");
+                throw new MovimientoStockNoValidoException("Las unidades a mover deben ser positivas");
+            }
+            //if(cantUnidadesMovidas > IRepositorioSettings.GetValueByName())
+        }
+        public void ValidarArticulo()
+        {
+            //▪ El artículo será uno de los existentes.
+            if (this.articuloMovido == null)
+            {
+                throw new MovimientoStockNoValidoException("el articulo que esta tratando de mover no puede ser null");
             }
         }
+        public void ValidarUsuario()
+        {
+            if (this.usuario.esEncargado == false)
+            {
+                throw new MovimientoStockNoValidoException("el usuario debe ser encargado");
+            }
+        }
+        public void ValidarTipoMovimiento()
+        {
+            if(this.tipoMovimiento.nombreMovimiento.ToUpper() != "venta".ToUpper()
+                && this.tipoMovimiento.nombreMovimiento.ToUpper() != "devolucion".ToUpper())
+            {
+                throw new MovimientoStockNoValidoException("no se puede ingresar un movimiento que no sea de ingresos o egresos");
+            }
+        }
+
+            //El tipo de movimiento de stock sea uno de los existentes.
+            //▪ El usuario exista, y se haya autenticado con rol encargado.
+            //▪ Solo se manejan ingresos y egresos.
+            
+
     }
 }

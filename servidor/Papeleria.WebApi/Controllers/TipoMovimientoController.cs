@@ -43,18 +43,26 @@ namespace Papeleria.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<TipoMovimientoDTO> FindTipoMovimiento(int id)
         {
-            if (id <= 0)
+            try
             {
-                return BadRequest("The Id must be a positive number.");
+                if (id <= 0)
+                {
+                    return BadRequest("The Id must be a positive number.");
+                }
+                TipoMovimientoDTO toReturn = _findTipoMovimientoCU.FindTipoMovimiento(id);
+                if (toReturn != null)
+                { 
+                    return Ok(toReturn);
+                }
+                return NoContent();
             }
-            TipoMovimientoDTO toReturn = _findTipoMovimientoCU.FindTipoMovimiento(id);
-            if (toReturn != null)
-            { 
-                return Ok(toReturn);
+            catch (TipoMovimientoNoValidoException tp)
+            {
+                return BadRequest(tp.Message);
             }
-            return NoContent();
             
 
         }
@@ -62,12 +70,12 @@ namespace Papeleria.WebApi.Controllers
         [HttpPost("")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<TipoMovimientoDTO> Create(TipoMovimientoDTO TipoMovimientoDTO)
         {
             
             try
             {
-                
                 _crearTipoMovimientoCU.CrearTipoMovimiento(TipoMovimientoDTO);
                 return Created("api/TipoMovimiento", TipoMovimientoDTO);
             }
@@ -87,38 +95,39 @@ namespace Papeleria.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<TipoMovimientoDTO> Delete(int id)
         {
-            
-            var aEliminar = _findTipoMovimientoCU.FindTipoMovimiento(id);
-            string tipo = aEliminar.nombreMovimiento;
-
-            
-
-
-            if (_existeTipoCU.ExisteTipo(tipo))
+            try
             {
-                return BadRequest("No puede eliminar un tipo de movimiento en uso");
-            }
-            else
-            {
-                try
+                var aEliminar = _findTipoMovimientoCU.FindTipoMovimiento(id);
+                string tipo = aEliminar.nombreMovimiento;
+
+
+
+
+                if (_existeTipoCU.ExisteTipo(tipo))
                 {
+                    return BadRequest("No puede eliminar un tipo de movimiento en uso");
+                }
+                else
+                {
+
                     _eliminarTipoMovimientoCU.EliminarTipoMovimiento(id);
                     return Ok();
 
                 }
-                catch (TipoMovimientoNoValidoException ex)
-                {
-                    return BadRequest(ex.Message);
-                }
-
-                catch (Exception ex)
-                {
-                    return BadRequest("Error inesperado con la base de datos");
-                }
+            }
+            catch (TipoMovimientoNoValidoException ex)
+            {
+                return BadRequest(ex.Message);
             }
 
-
+            catch (Exception ex)
+            {
+                return BadRequest("Error inesperado con la base de datos");
+            }
         }
+
+
+        
         [HttpPut("{tipoMovimientoId}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<TipoMovimientoDTO> Update([FromBody]TipoMovimientoDTO dto)

@@ -4,7 +4,6 @@ using Microsoft.VisualBasic;
 using Papeleria.LogicaNegocio.Entidades;
 using Papeleria.LogicaNegocios.Entidades;
 using Papeleria.LogicaNegocios.InterfacesAccesoDatos;
-using Papeleria.LogicaNegocios.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,13 +43,6 @@ namespace Papeleria.AccesoDatos.EntityFramework.Repositorios
         //dentro de año por tipo de movimiento.
 
 
-
-        //public IEnumerable<MovimientoStock> GetResumenAgrupadoPorTipoYAño()
-        //{
-        //    return _context.MovimientosStock.Select(mv => mv)
-        //                                    .GroupBy(mv=>mv.fechaYHora.Year)
-        //}
-
         public bool Add(MovimientoStock aAgregar)
         {
             throw new NotImplementedException();
@@ -58,12 +50,12 @@ namespace Papeleria.AccesoDatos.EntityFramework.Repositorios
 
         public IEnumerable<MovimientoStock> FindAll()
         {
-            throw new NotImplementedException();
+            return _context.MovimientosStock;
         }
 
         public MovimientoStock FindByID(int id)
         {
-            return _context.MovimientosStock.Where(m => m.id == id).AsNoTracking().FirstOrDefault();
+            return _context.MovimientosStock.Where(m => m.id == id).FirstOrDefault();
         }
 
         public bool Remove(int id)
