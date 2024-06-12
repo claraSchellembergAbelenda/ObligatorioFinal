@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "k59BdEZY9NtLQ+Y9Iqq+2wH7nQDutdwrZYNOS+0mgnWXc8ECikW7yezeCQENnolpZPuTmffLM6G32mU7DRi72g==",
+  "dgSpecHash": "Hz9eiuv+ujmA/3n38dsDYaefY1Xf48znxPq+3I0+vHx/Db41dAsqqpvmYrV3st7+Vz4xtBJqci5sg+7G3bEF+w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ClaraSchellembergAbe\\source\\repos\\obligatorio2P3\\Deposito.Presentacion\\Deposito.Presentacion.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\ClaraSchellembergAbe\\source\\gitHubObligatorioRepository\\ObligatorioFinal\\Cliente\\Deposito.Presentacion\\Deposito.Presentacion.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ClaraSchellembergAbe\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualBasic;
 using Microsoft.Win32;
 using Papeleria.LogicaNegocio.InterfacesEntidades;
+using Papeleria.LogicaNegocios.Exceptions.TipoMovimiento;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Papeleria.LogicaNegocios.Entidades
@@ -11,20 +12,24 @@ namespace Papeleria.LogicaNegocios.Entidades
         //“Compra”, etc.).
         //En algunos casos el tipo de movimiento corresponde a una reducción del stock, y en otros casos a
         //un aumento.
-        //Nota: Si el movimiento es un traslado (ej.: cambio de estantería, dentro del depósito, una caja con
-        //resmas de papel) no se registra un movimiento de stock.No habrá en este sistema la posibilidad
-        //de registrar tipos de movimiento que no impliquen un cambio en el stock.
         public int id {  get; set; }
-        public string nombreMovimiento { get; set; }
-        public bool esPositivo { get; set; }
+        public string nombreMovimiento { get; set; } //unique!!
+        public int esPositivo { get; set; }
         public TipoMovimiento() { }
-        public TipoMovimiento(int id, string nombreMovimiento, bool esPositivo)
+        public TipoMovimiento(int id, string nombreMovimiento, int esPositivo)
         {
             this.id = id;
             this.nombreMovimiento = nombreMovimiento;
             this.esPositivo = esPositivo;
         }
 
+        public void validarSigno()
+        {
+            if(esPositivo!=1 && esPositivo!=-1)
+            {
+                throw new TipoMovimientoNoValidoException();
+            }
+        }
         public void EsValido()
         {
             throw new NotImplementedException();

@@ -61,6 +61,9 @@ namespace Papeleria.LogicaNegocios.Entidades
                 throw new MovimientoStockNoValidoException("el articulo que esta tratando de mover no puede ser null");
             }
         }
+
+
+        //▪ El usuario exista, y se haya autenticado con rol encargado.
         public void ValidarUsuario()
         {
             if (this.usuario.esEncargado == false)
@@ -68,6 +71,8 @@ namespace Papeleria.LogicaNegocios.Entidades
                 throw new MovimientoStockNoValidoException("el usuario debe ser encargado");
             }
         }
+
+        //▪ Solo se manejan ingresos y egresos.
         public void ValidarTipoMovimiento()
         {
             if(this.tipoMovimiento.nombreMovimiento.ToUpper() != "venta".ToUpper()
@@ -77,10 +82,9 @@ namespace Papeleria.LogicaNegocios.Entidades
             }
         }
 
-            //El tipo de movimiento de stock sea uno de los existentes.
-            //▪ El usuario exista, y se haya autenticado con rol encargado.
-            //▪ Solo se manejan ingresos y egresos.
-            
+        //El tipo de movimiento de stock sea uno de los existentes.
+
+
 
     }
 }
