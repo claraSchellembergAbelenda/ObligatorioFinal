@@ -2,7 +2,9 @@
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.VisualBasic;
 using Papeleria.LogicaNegocio.Entidades;
+using Papeleria.LogicaNegocio.Exceptions.PedidoComun;
 using Papeleria.LogicaNegocios.Entidades;
+using Papeleria.LogicaNegocios.Exceptions.MovimientoStock;
 using Papeleria.LogicaNegocios.InterfacesAccesoDatos;
 using System;
 using System.Collections.Generic;
@@ -45,7 +47,28 @@ namespace Papeleria.AccesoDatos.EntityFramework.Repositorios
 
         public bool Add(MovimientoStock aAgregar)
         {
-            throw new NotImplementedException();
+            try
+            {
+                aAgregar.EsValido();
+                this._context.Entry(aAgregar.articuloMovido).State = EntityState.Unchanged;
+                this._context.Entry(aAgregar.articuloMovido).State = EntityState.Unchanged;
+                this._context.Entry(aAgregar.tipoMovimiento).State = EntityState.Unchanged;
+                _context.MovimientosStock.Add(aAgregar);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (MovimientoStockNoValidoException ex)
+            {
+                throw new MovimientoStockNoValidoException(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null)
+                {
+                    throw new Exception(ex.InnerException.Message);
+                }
+                throw new Exception(ex.Message);
+            }
         }
 
         public IEnumerable<MovimientoStock> FindAll()
