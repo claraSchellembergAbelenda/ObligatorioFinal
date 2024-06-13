@@ -15,9 +15,6 @@ using Papeleria.LogicaAplicacion.CasosDeUso.TipoMovimiento;
 using Papeleria.LogicaNegocios.InterfacesAccesoDatos;
 using Papeleria.LogicaAplicacion.CasosDeUso.MovimientoStock;
 using Papeleria.LogicaAplicacion.InterfacesCU.MovimientoStock;
-using Papeleria.LogicaNegocios.InterfacesAccesoDatos;
-using Papeleria.LogicaAplicacion.InterfacesCU.MovimientoStock;
-using Papeleria.LogicaAplicacion.CasosDeUso.MovimientoStock;
 
 namespace Papeleria.WebApi
 {
@@ -39,6 +36,7 @@ namespace Papeleria.WebApi
             builder.Services.AddScoped<IRepositorioPedido, RepositorioPedidoEF>();
             builder.Services.AddScoped<IRepositorioLinea, RepositorioLineaEF>();
             builder.Services.AddScoped<IRepositorioMovimientoStock, RepositorioMovimientoStockEF>();
+            builder.Services.AddScoped<IRepositorioTipoMovimiento, RepositorioTipoMovimientoEF>();
 
 
 
@@ -69,7 +67,16 @@ namespace Papeleria.WebApi
             builder.Services.AddScoped<IGetResumeByYearAndTypeUC, ObtenerResumenMovimientoPorAñoCU>();
             builder.Services.AddScoped<IExisteTipoCU, ExisteTipoCU>();
             builder.Services.AddScoped<IFindByIDArticuloCU, FindByIdArticuloCU>();
+
             builder.Services.AddScoped<ICrearMovimientoStockCU, CrearMovimientoStockCU>();
+
+            builder.Services.AddScoped<ICrearTipoMovimientoCU, CrearTipoMovimientoCU>();
+            builder.Services.AddScoped<IEliminarTipoMovimientoCU, EliminarTipoMovimientoCU>();
+            builder.Services.AddScoped<IFindTipoMovimientoCU, FindTipoMovimientoCU>();
+            builder.Services.AddScoped<IGetTiposMovimientoCU, GetTiposMovimientoCU>();
+            builder.Services.AddScoped<IUpdateTipoMovientoCU, UpdateTipoMovimientoCU>();
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

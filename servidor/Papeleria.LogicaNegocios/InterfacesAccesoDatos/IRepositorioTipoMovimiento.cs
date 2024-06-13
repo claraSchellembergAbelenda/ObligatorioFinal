@@ -11,6 +11,6 @@ namespace Papeleria.LogicaNegocios.InterfacesAccesoDatos
 {
     public interface IRepositorioTipoMovimiento : IRepositorio<TipoMovimiento>
     {
-        
+         
     }
 }
