@@ -81,11 +81,7 @@ namespace Papeleria.AccesoDatos.EntityFramework.Repositorios
             return _context.MovimientosStock.Where(m => m.id == id).FirstOrDefault();
         }
 
-        public bool Remove(int id)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public bool Update(MovimientoStock aModificar)
         {
             throw new NotImplementedException();
@@ -98,6 +94,11 @@ namespace Papeleria.AccesoDatos.EntityFramework.Repositorios
             }
 
             return false;
+        }
+
+        public bool Remove(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

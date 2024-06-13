@@ -13,9 +13,14 @@ namespace Papeleria.LogicaAplicacion.DTOs
     {
         public int id { get; set; }
         public DateTime fechaYHora { get; set; }
+        [ForeignKey(nameof(articuloMovido))] public int articuloMovidoId { get; set; }
+
         public ArticuloDTO articuloMovido { get; set; }
+        [ForeignKey(nameof(tipoMovimiento))] public int tipoMovimientoId { get; set; }
 
         public TipoMovimientoDTO tipoMovimiento { get; set; }
+        [ForeignKey(nameof(usuario))] public int usuarioId { get; set; }
+
         public UsuarioDTO usuario { get; set; }
         public int cantUnidadesMovidas { get; set; }
 
@@ -32,6 +37,12 @@ namespace Papeleria.LogicaAplicacion.DTOs
 
         public MovimientoStockDTO(MovimientoStock movimientoStock)
         {
+            this.id = movimientoStock.id;
+            this.fechaYHora = movimientoStock.fechaYHora;
+            this.articuloMovidoId = movimientoStock.articuloMovidoId;
+            this.tipoMovimientoId = movimientoStock.tipoMovimientoId;
+            this.usuarioId = movimientoStock.usuarioId;
+            this.cantUnidadesMovidas = cantUnidadesMovidas;
         }
     }
 }

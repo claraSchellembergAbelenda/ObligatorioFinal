@@ -4,6 +4,7 @@ using Papeleria.LogicaAplicacion.DTOs;
 using Papeleria.LogicaAplicacion.InterfacesCU.Articulos;
 using Papeleria.LogicaAplicacion.InterfacesCU.MovimientoStock;
 using Papeleria.LogicaNegocios.Exceptions.MovimientoStock;
+using Papeleria.LogicaNegocios.Exceptions.TipoMovimiento;
 
 namespace Papeleria.WebApi.Controllers
 {
@@ -17,15 +18,18 @@ namespace Papeleria.WebApi.Controllers
         private IGetResumeByYearAndTypeUC _getResumeByYearAndTypeUC;
         private IExisteTipoCU _existeTipoMovimientoCU;
         private IFindByIDArticuloCU _findArticuloByIdCU;
+        private ICrearMovimientoStockCU _crearMovimientoStockCU;
+
         public MovimientoStockController(IGetPorTipoMovimientoYArticuloCU getMovimientos, 
             IGetArticuloPorFechaMovimiento getArticuloPorFechaMovimiento, 
-            IGetResumeByYearAndTypeUC getResumeByYearAndTypeUC, IExisteTipoCU existeTipoMovimientoCU, IFindByIDArticuloCU findByIDArticuloCU)
+            IGetResumeByYearAndTypeUC getResumeByYearAndTypeUC, IExisteTipoCU existeTipoMovimientoCU, IFindByIDArticuloCU findByIDArticuloCU,  ICrearMovimientoStockCU crearMovimientoStockCU)
         {
             _getMovimientosPorTipo = getMovimientos;
             _getArticuloPorFechaMovimiento = getArticuloPorFechaMovimiento;
             _getResumeByYearAndTypeUC = getResumeByYearAndTypeUC;
             _existeTipoMovimientoCU = existeTipoMovimientoCU;
             _findArticuloByIdCU = findByIDArticuloCU;
+            _crearMovimientoStockCU = crearMovimientoStockCU;
         }
 
 
@@ -117,6 +121,38 @@ namespace Papeleria.WebApi.Controllers
             {
                 return BadRequest(e.Message);
             }
+        }
+
+        public ActionResult Create()
+        {
+            //obtener los clientes y los articulos
+            return View();
+        }
+
+        [HttpPost("")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult<MovimientoStockDTO> Create(MovimientoStockDTO dto)
+        {
+
+            try
+            {
+
+                _crearMovimientoStockCU.CrearMovimiento(dto);
+                return Created("api/MovimientoStock", dto);
+            }
+            catch (MovimientoStockNoValidoException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest("Error inesperado con la base de datos");
+            }
+
+
         }
     }
 }

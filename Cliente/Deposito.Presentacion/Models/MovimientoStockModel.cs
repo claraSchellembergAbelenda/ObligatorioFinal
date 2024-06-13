@@ -7,6 +7,7 @@
         public ArticuloModel articuloMovido { get; set; }
 
         public TipoMovimientoModel tipoMovimiento { get; set; }
+        public int tipoMovimientoId { get; set; }
         public UsuarioModel usuario { get; set; }
         public int cantUnidadesMovidas { get; set; }
 

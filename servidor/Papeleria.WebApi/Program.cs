@@ -69,7 +69,7 @@ namespace Papeleria.WebApi
             builder.Services.AddScoped<IGetResumeByYearAndTypeUC, ObtenerResumenMovimientoPorAñoCU>();
             builder.Services.AddScoped<IExisteTipoCU, ExisteTipoCU>();
             builder.Services.AddScoped<IFindByIDArticuloCU, FindByIdArticuloCU>();
-
+            builder.Services.AddScoped<ICrearMovimientoStockCU, CrearMovimientoStockCU>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

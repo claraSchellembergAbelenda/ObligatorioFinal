@@ -1,4 +1,5 @@
 ﻿using Deposito.Presentacion.Models;
+using Humanizer;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -14,6 +15,55 @@ namespace Deposito.Presentacion.Controllers
             cliente = new HttpClient();
             baseURL = "https://localhost:7032/api/MovimientoStock/";
         }
+
+      
+        [HttpPost]
+        public ActionResult Create(string message)
+        {
+            try
+            {
+                HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Get, new Uri(baseURL + "api/TipoMovimiento/GetTiposMovimientos"));
+                Task<HttpResponseMessage> respuesta = cliente.SendAsync(solicitud);
+                respuesta.Wait();
+
+                if (respuesta.Result.IsSuccessStatusCode)
+                {
+                    var objetoComoTexto = respuesta.Result.Content.ReadAsStringAsync().Result;
+                    var tipos = JsonConvert.DeserializeObject<IEnumerable<TipoMovimientoModel>>(objetoComoTexto);
+                    ViewBag.Tipos = tipos;
+                    
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+            }
+
+            return View();
+        }
+
+        /*[HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddMember(MovimientoStockModel MovimientoStock, string playerName)
+        {
+            try
+
+            {
+                PlayerModel player = new PlayerModel { Name = playerName };
+                if (tempMovimientoStock == null)
+                {
+                    tempMovimientoStock = new MovimientoStockModel { Players = new List<PlayerModel>() };
+                }
+                tempMovimientoStock.Players.Add(player);
+                return RedirectToAction(nameof(Create));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        */
 
         public ActionResult GetMovimientosPorFechas()
         {
