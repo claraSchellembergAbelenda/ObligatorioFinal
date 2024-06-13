@@ -123,11 +123,7 @@ namespace Papeleria.WebApi.Controllers
             }
         }
 
-        public ActionResult Create()
-        {
-            //obtener los clientes y los articulos
-            return View();
-        }
+        
 
         [HttpPost("")]
         [ProducesResponseType(StatusCodes.Status201Created)]
