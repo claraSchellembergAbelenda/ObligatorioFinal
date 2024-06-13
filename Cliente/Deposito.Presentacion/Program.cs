@@ -22,6 +22,8 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=MovimientoStock}/{action=GetMovimientosPorFechas}/{id?}");
+    //pattern: "{controller=MovimientoStock}/{action=GetMovimientosPorFechas}/{id?}");
+    pattern: "{controller=MovimientoStock}/{action=Create}");
+
 
 app.Run();

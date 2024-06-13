@@ -17,7 +17,7 @@ namespace Deposito.Presentacion.Controllers
         }
 
       
-        [HttpPost]
+        
         public ActionResult Create(string message)
         {
             try

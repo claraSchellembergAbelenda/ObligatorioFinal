@@ -17,9 +17,12 @@
                 <label asp-for="tipoMovimientoId" class="control-label"></label>
                 <select asp-for="tipoMovimientoId" class="form-control">
                     <option value="">Selecciona un Tipo de Movimiento</option>
-                    @foreach (var tipo in ViewBag.Tipos)
+                    @if (ViewBag.Tipos != null)
                     {
-                        <option value="@tipo.id">@tipo.nombreMovimiento</option>
+                        foreach (var tipo in ViewBag.Tipos)
+                        {
+                            <option value="@tipo.id">@tipo.nombreMovimiento</option>
+                        }
                     }
                 </select>
             </div>
