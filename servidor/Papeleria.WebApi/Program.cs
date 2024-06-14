@@ -75,7 +75,9 @@ namespace Papeleria.WebApi
             builder.Services.AddScoped<IFindTipoMovimientoCU, FindTipoMovimientoCU>();
             builder.Services.AddScoped<IGetTiposMovimientoCU, GetTiposMovimientoCU>();
             builder.Services.AddScoped<IUpdateTipoMovientoCU, UpdateTipoMovimientoCU>();
-
+            builder.Services.AddScoped<IFindTipoMovimientoByNameCU, FindTipoMovimientoByNameCU>();
+            builder.Services.AddScoped<IGetAllMovimientosCU, GetAllMovimientosCU>();
+            
 
             var app = builder.Build();
 

@@ -34,7 +34,7 @@ namespace Papeleria.AccesoDatos.EntityFramework.Repositorios
 
         public IEnumerable<Articulo> GetArticuloPorFechaMovimiento(DateTime f1, DateTime f2)
         {
-            return _context.MovimientosStock.Where(mv => mv.fechaYHora >= f1 && mv.fechaYHora <= f2)
+            return _context.MovimientosStock.Where(mv => EF.Functions.DateDiffDay(f1, mv.fechaYHora) >= 0 && EF.Functions.DateDiffDay(mv.fechaYHora, f2) >= 0)
                 .Include(mv => mv.articuloMovido)
                 .Select(a => a.articuloMovido);
         }
@@ -51,7 +51,7 @@ namespace Papeleria.AccesoDatos.EntityFramework.Repositorios
             {
                 aAgregar.EsValido();
                 this._context.Entry(aAgregar.articuloMovido).State = EntityState.Unchanged;
-                this._context.Entry(aAgregar.articuloMovido).State = EntityState.Unchanged;
+                this._context.Entry(aAgregar.usuario).State = EntityState.Unchanged;
                 this._context.Entry(aAgregar.tipoMovimiento).State = EntityState.Unchanged;
                 _context.MovimientosStock.Add(aAgregar);
                 _context.SaveChanges();
@@ -73,7 +73,7 @@ namespace Papeleria.AccesoDatos.EntityFramework.Repositorios
 
         public IEnumerable<MovimientoStock> FindAll()
         {
-            return _context.MovimientosStock;
+            return _context.MovimientosStock.Include(mv => mv.tipoMovimiento);
         }
 
         public MovimientoStock FindByID(int id)

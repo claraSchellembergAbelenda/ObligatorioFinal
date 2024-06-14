@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Papeleria.LogicaAplicacion.CasosDeUso.MovimientoStock;
 using Papeleria.LogicaAplicacion.DTOs;
 using Papeleria.LogicaAplicacion.InterfacesCU.Articulos;
 using Papeleria.LogicaAplicacion.InterfacesCU.MovimientoStock;
+using Papeleria.LogicaAplicacion.InterfacesCU.TipoMovimiento;
 using Papeleria.LogicaNegocios.Exceptions.MovimientoStock;
 using Papeleria.LogicaNegocios.Exceptions.TipoMovimiento;
 
@@ -19,10 +21,14 @@ namespace Papeleria.WebApi.Controllers
         private IExisteTipoCU _existeTipoMovimientoCU;
         private IFindByIDArticuloCU _findArticuloByIdCU;
         private ICrearMovimientoStockCU _crearMovimientoStockCU;
+        private IFindTipoMovimientoByNameCU _findTipoMovimientoByNameCU;
+        private IGetAllMovimientosCU _getAllMovimientosCU;
 
         public MovimientoStockController(IGetPorTipoMovimientoYArticuloCU getMovimientos, 
             IGetArticuloPorFechaMovimiento getArticuloPorFechaMovimiento, 
-            IGetResumeByYearAndTypeUC getResumeByYearAndTypeUC, IExisteTipoCU existeTipoMovimientoCU, IFindByIDArticuloCU findByIDArticuloCU,  ICrearMovimientoStockCU crearMovimientoStockCU)
+            IGetResumeByYearAndTypeUC getResumeByYearAndTypeUC, IExisteTipoCU existeTipoMovimientoCU,
+            IFindByIDArticuloCU findByIDArticuloCU,  ICrearMovimientoStockCU crearMovimientoStockCU, IFindTipoMovimientoCU findTipoMovimientoCU,
+            IFindTipoMovimientoByNameCU findTipoMovimientoByNameCU, IGetAllMovimientosCU getAllMovimientosCU)
         {
             _getMovimientosPorTipo = getMovimientos;
             _getArticuloPorFechaMovimiento = getArticuloPorFechaMovimiento;
@@ -30,6 +36,8 @@ namespace Papeleria.WebApi.Controllers
             _existeTipoMovimientoCU = existeTipoMovimientoCU;
             _findArticuloByIdCU = findByIDArticuloCU;
             _crearMovimientoStockCU = crearMovimientoStockCU;
+            _findTipoMovimientoByNameCU = findTipoMovimientoByNameCU;
+            _getAllMovimientosCU = getAllMovimientosCU;
         }
 
 
@@ -51,7 +59,8 @@ namespace Papeleria.WebApi.Controllers
         {
             try
             {
-                if (_existeTipoMovimientoCU.ExisteTipo(tipoMovimiento))
+                TipoMovimientoDTO tipo = _findTipoMovimientoByNameCU.FindTipoMovimientoByName(tipoMovimiento);
+                if (tipo!=null)
                 {
                     ArticuloDTO art =_findArticuloByIdCU.EncontrarPorIdArticulo(idArticulo);
                     if (art != null)
@@ -60,13 +69,13 @@ namespace Papeleria.WebApi.Controllers
                     }
                     else
                     {
-                        return RedirectToAction(nameof(ObtenerMovimientosPorArticuloYTipo), new { Message = "Id de articulo invalido, por favor trate de vuelta"
+                        return BadRequest( new { Message = "Id de articulo invalido, por favor trate de vuelta"
                         });
                     }
                 }
                 else
                 {
-                    return RedirectToAction(nameof(ObtenerMovimientosPorArticuloYTipo), new
+                    return BadRequest( new
                     {
                         Message = "Tipo de movimiento no encontrado, por favor trate de vuelta"
                     });
@@ -86,13 +95,25 @@ namespace Papeleria.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 
-        public ActionResult GetArticulosPorFecha( string fechaInicio, string fechaFin)
+       
+        public ActionResult GetArticulosPorFecha(string fechaInicio, string fechaFin)
         {
             try
             {
-                DateTime inicio = DateTime.Parse(fechaInicio);
-                DateTime fin = DateTime.Parse(fechaFin);
-                return Ok(_getArticuloPorFechaMovimiento.GetArticuloPorFechas(inicio, fin));
+                DateTime inicio, fin;
+
+                DateTime.TryParse(fechaInicio, out inicio);
+                DateTime.TryParse(fechaFin, out fin);
+
+                fin = DateTime.Now.AddDays(1);
+                inicio = DateTime.Now.AddDays(-15);
+
+                //DateTime inicio = DateTime.Parse(fechaInicio);
+                //DateTime fin = DateTime.Parse(fechaFin);
+
+                var articulos = _getArticuloPorFechaMovimiento.GetArticuloPorFechas(inicio, fin);
+
+                return Ok(articulos);
 
             }
             catch(Exception ex)
@@ -108,12 +129,29 @@ namespace Papeleria.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult GetMovementsByYearAndType()
         {
+            IEnumerable<MovimientoStockDTO> movimientos =
+                this._getAllMovimientosCU.GetAllMovimientosCU();
+
+            //return Ok(movimientos.GroupBy(movimientos => movimientos.fechaYHora.Year)
+            //    .Select(movimientosAgrupados => new ResumenMovimientosDTO
+            //    {
+            //        Año = movimientosAgrupados.Key,
+            //        NombreTipoMovimientos = movimientosAgrupados,
+            //        TotalCantidadesMovidas = movimientosAgrupados.Sum(mv =>
+            //                    mv.cantUnidadesMovidas
+            //                )
+            //    }.ToArray()
+            //    )); ;
+
+
+
+
             try
             {
-                return Ok(View(_getResumeByYearAndTypeUC.ObtenerResumenMovimiento()));
-                
+                return Ok(_getResumeByYearAndTypeUC.ObtenerResumenMovimiento());
+
             }
-            catch(MovimientoStockNoValidoException mv)
+            catch (MovimientoStockNoValidoException mv)
             {
                 return BadRequest(mv.Message);
             }

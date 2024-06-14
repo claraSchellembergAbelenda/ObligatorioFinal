@@ -24,6 +24,7 @@ namespace Papeleria.AccesoDatos.EntityFramework.Repositorios
             try
             {
                 this._context.TiposDeMovimientos.Add(aAgregar);
+                //this._context.Entry(aAgregar.).State = EntityState.Unchanged;
                 this._context.SaveChanges();
                 return true;
             }
@@ -47,6 +48,11 @@ namespace Papeleria.AccesoDatos.EntityFramework.Repositorios
             return _context.TiposDeMovimientos.Where(tp => tp.id == id).AsNoTracking().FirstOrDefault();
         }
         
+
+        public TipoMovimiento FindTipoMovimientoByName(string name)
+        {
+            return _context.TiposDeMovimientos.Where(tp => tp.nombreMovimiento== name).FirstOrDefault();
+        }
 
         public bool Remove(int id)
         {

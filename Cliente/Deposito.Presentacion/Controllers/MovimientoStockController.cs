@@ -13,7 +13,7 @@ namespace Deposito.Presentacion.Controllers
         {
 
             cliente = new HttpClient();
-            baseURL = "https://localhost:7032/api/MovimientoStock/";
+            baseURL = "https://localhost:44388/api/MovimientoStock/";
         }
 
       
