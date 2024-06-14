@@ -5,6 +5,7 @@
         public int id { get; set; }
         public DateTime fechaYHora { get; set; }
         public ArticuloModel articuloMovido { get; set; }
+        public int articuloMovidoId { get; set; }
 
         public TipoMovimientoModel tipoMovimiento { get; set; }
         public int tipoMovimientoId { get; set; }

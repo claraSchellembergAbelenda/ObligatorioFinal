@@ -17,12 +17,18 @@ namespace Deposito.Presentacion.Controllers
         }
 
       
-        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public ActionResult Create(string message)
         {
             try
             {
-                HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Get, new Uri(baseURL + "api/TipoMovimiento/GetTiposMovimientos"));
+                
+
+                HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Get, new Uri("https://localhost:44388/api/TipoMovimiento"));
                 Task<HttpResponseMessage> respuesta = cliente.SendAsync(solicitud);
                 respuesta.Wait();
 
@@ -31,7 +37,28 @@ namespace Deposito.Presentacion.Controllers
                     var objetoComoTexto = respuesta.Result.Content.ReadAsStringAsync().Result;
                     var tipos = JsonConvert.DeserializeObject<IEnumerable<TipoMovimientoModel>>(objetoComoTexto);
                     ViewBag.Tipos = tipos;
-                    
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+            }
+            try
+            {
+
+
+                HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Get, new Uri("https://localhost:44388/api/Articulos"));
+                Task<HttpResponseMessage> respuesta = cliente.SendAsync(solicitud);
+                respuesta.Wait();
+
+                if (respuesta.Result.IsSuccessStatusCode)
+                {
+                    var objetoComoTexto = respuesta.Result.Content.ReadAsStringAsync().Result;
+                    var tipos = JsonConvert.DeserializeObject<IEnumerable<ArticuloModel>>(objetoComoTexto);
+                    ViewBag.Articulos = tipos;
+
                 }
 
             }
@@ -41,6 +68,10 @@ namespace Deposito.Presentacion.Controllers
             }
 
             return View();
+
+
+
+
         }
 
         /*[HttpPost]
@@ -64,6 +95,16 @@ namespace Deposito.Presentacion.Controllers
             }
         }
         */
+
+
+
+
+
+
+
+
+
+
 
         public ActionResult GetMovimientosPorFechas()
         {
