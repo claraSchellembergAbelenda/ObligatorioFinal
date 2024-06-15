@@ -102,11 +102,12 @@ namespace Papeleria.WebApi.Controllers
             {
                 DateTime inicio, fin;
 
-                DateTime.TryParse(fechaInicio, out inicio);
-                DateTime.TryParse(fechaFin, out fin);
+                inicio =DateTime.ParseExact(fechaInicio, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
 
-                fin = DateTime.Now.AddDays(1);
-                inicio = DateTime.Now.AddDays(-15);
+                fin = DateTime.ParseExact(fechaFin, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
+
+                //fin = DateTime.Now.AddDays(1);
+                //inicio = DateTime.Now.AddDays(-15);
 
                 //DateTime inicio = DateTime.Parse(fechaInicio);
                 //DateTime fin = DateTime.Parse(fechaFin);
@@ -142,8 +143,6 @@ namespace Papeleria.WebApi.Controllers
             //                )
             //    }.ToArray()
             //    )); ;
-
-
 
 
             try

@@ -1,8 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model IEnumerable<ArticuloModel>
 
 <form method="post" asp-action="GetMovimientosPorFechas">
         <div>
@@ -13,3 +9,62 @@
             <input type="submit" value="ingresar fechas"/>
         </div>
 </form>
+@if (!string.IsNullOrEmpty(ViewBag.mensaje))
+{
+    <div class="alert alert-danger">
+        @ViewBag.mensaje
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.id)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.descripcion)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.codProveedor)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.precioActual)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(Model!= null)
+        {
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.codProveedor)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.precioActual)
+                    </td>
+                    <td>
+
+                        @Html.DisplayFor(modelItem => item.stock)
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
