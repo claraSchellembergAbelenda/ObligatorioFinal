@@ -87,6 +87,9 @@ namespace Papeleria.Web.Controllers
             try
             {
                 pedidoDTO.cliente = _findClienteByID.EncontrarPorIdCliente(pedidoDTO.clienteId);
+
+
+
                 if (tempPedido != null && tempPedido._lineas.Count > 0)
                 {
                     pedidoDTO._lineas = tempPedido._lineas;

@@ -19,6 +19,8 @@ namespace Papeleria.LogicaAplicacion.Mappers
         }
         public static Usuario FromDto(UsuarioDTO dto)
         {
+            //var nombreCompleto = new NombreCompleto(dto.nombre, dto.apellido);
+            var password = Encriptadora.HashPassword(dto.password);
             return new Usuario
             {
                 id = dto.Id,

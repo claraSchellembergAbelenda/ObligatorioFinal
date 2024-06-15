@@ -93,7 +93,8 @@ namespace Deposito.Presentacion.Controllers
                 if (respuesta.Result.IsSuccessStatusCode)
                 {
                     var objetoComoTexto = respuesta.Result.Content.ReadAsStringAsync().Result;
-                    var m = JsonConvert.DeserializeObject<IEnumerable<MovimientoStockModel>>(objetoComoTexto);
+                    var m = JsonConvert.DeserializeObject<MovimientoStockModel>(objetoComoTexto);
+                    ViewBag.SuccessMessage = "MovimientoStock creado con éxito";
                     return View(m);
 
                 }
@@ -104,10 +105,11 @@ namespace Deposito.Presentacion.Controllers
             }
             catch (Exception ex)
             {
+
                 return View();
             }
 
-            return View(); ;
+            return View(movimiento); ;
 
 
 

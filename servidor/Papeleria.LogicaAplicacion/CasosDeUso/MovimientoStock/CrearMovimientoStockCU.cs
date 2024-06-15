@@ -18,24 +18,20 @@ namespace Papeleria.LogicaAplicacion.CasosDeUso.MovimientoStock
 
         
         private  IRepositorioMovimientoStock _repositorioMovimientoStock;
-        private  IRepositorioArticulo _repositorioArticulo; 
-        private  IRepositorioTipoMovimiento _repositorioTipoMovimiento; 
-        private  IRepositorioUsuario _repositorioUsuario;
 
 
 
-        public CrearMovimientoStockCU(IRepositorioMovimientoStock repositorioMovimientoStock, IRepositorioArticulo repositorioArticulo, IRepositorioTipoMovimiento repositorioTipoMovimiento, IRepositorioUsuario repositorioUsuario)
+        public CrearMovimientoStockCU(IRepositorioMovimientoStock repositorioMovimientoStock)
         {
             _repositorioMovimientoStock = repositorioMovimientoStock;
-            _repositorioArticulo = repositorioArticulo;
-            _repositorioTipoMovimiento= repositorioTipoMovimiento;
-            _repositorioUsuario = repositorioUsuario;
+            
         }
 
 
         public void CrearMovimiento(MovimientoStockDTO dto) 
         {
-
+            
+            
             _repositorioMovimientoStock.Add(MovimientoStockDtoMapper.FromDto(dto));
 
         }
