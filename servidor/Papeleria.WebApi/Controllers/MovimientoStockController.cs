@@ -167,9 +167,12 @@ namespace Papeleria.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<MovimientoStockDTO> Create(MovimientoStockDTO dto)
+        public ActionResult<MovimientoStockDTO> Create([FromBody] MovimientoStockDTO dto)
         {
-
+            if (dto == null)
+            {
+                return BadRequest("Invalid data.");
+            }
             try
             {
 

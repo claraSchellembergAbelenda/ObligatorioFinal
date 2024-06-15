@@ -1,6 +1,9 @@
-﻿using Papeleria.LogicaAplicacion.DTOs;
+﻿using Papeleria.LogicaNegocio.Entidades;
+using Papeleria.LogicaNegocios.Entidades;
+using Papeleria.LogicaAplicacion.DTOs;
 using Papeleria.LogicaAplicacion.InterfacesCU.MovimientoStock;
 using Papeleria.LogicaAplicacion.Mappers;
+using Papeleria.LogicaNegocio.InterfacesAccesoDatos;
 using Papeleria.LogicaNegocios.InterfacesAccesoDatos;
 using System;
 using System.Collections.Generic;
@@ -13,16 +16,26 @@ namespace Papeleria.LogicaAplicacion.CasosDeUso.MovimientoStock
     public class CrearMovimientoStockCU : ICrearMovimientoStockCU
     {
 
-        private IRepositorioMovimientoStock _repositorioMovimientoStock;
+        
+        private  IRepositorioMovimientoStock _repositorioMovimientoStock;
+        private  IRepositorioArticulo _repositorioArticulo; 
+        private  IRepositorioTipoMovimiento _repositorioTipoMovimiento; 
+        private  IRepositorioUsuario _repositorioUsuario;
 
-        public CrearMovimientoStockCU(IRepositorioMovimientoStock repositorio)
+
+
+        public CrearMovimientoStockCU(IRepositorioMovimientoStock repositorioMovimientoStock, IRepositorioArticulo repositorioArticulo, IRepositorioTipoMovimiento repositorioTipoMovimiento, IRepositorioUsuario repositorioUsuario)
         {
-            _repositorioMovimientoStock = repositorio;
+            _repositorioMovimientoStock = repositorioMovimientoStock;
+            _repositorioArticulo = repositorioArticulo;
+            _repositorioTipoMovimiento= repositorioTipoMovimiento;
+            _repositorioUsuario = repositorioUsuario;
         }
 
 
         public void CrearMovimiento(MovimientoStockDTO dto) 
         {
+
             _repositorioMovimientoStock.Add(MovimientoStockDtoMapper.FromDto(dto));
 
         }
