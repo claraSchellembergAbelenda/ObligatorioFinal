@@ -97,15 +97,7 @@ namespace Deposito.Presentacion.Controllers
         */
 
 
-
-
-
-
-
-
-
-
-
+        #region GetMovimientosPorFechas
         public ActionResult GetMovimientosPorFechas()
         {
             return View();
@@ -133,5 +125,80 @@ namespace Deposito.Presentacion.Controllers
             }
             return View();
         }
+        #endregion
+
+        #region GetMovimientosPorIdYTipo
+
+        public ActionResult GetMovimientosPorId(string message)
+        {
+            ViewBag.message = message;
+            return View();
+        }
+
+        [HttpPost]
+
+        public ActionResult GetMovimientosPorId(int idArticulo, string tipoMovimiento)
+        {
+            try
+            {
+                if (idArticulo <= 0 || string.IsNullOrEmpty(tipoMovimiento))
+                {
+                    return View(new 
+                    { message = "Los datos ingresados son incorrectos, por favor recuerde que el id debe ser positivo y el tipoMovimiento no puede ser vacio" });
+                }
+
+                HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Get,
+                    new Uri(baseURL + "ObtenerMovimientosPorArticuloYTipo?idArticulo=" + idArticulo + "&tipoMovimiento=" + tipoMovimiento));
+                Task<HttpResponseMessage> respuesta = cliente.SendAsync(solicitud);
+                respuesta.Wait();
+                if (respuesta.Result.IsSuccessStatusCode)
+                {
+                    var objetoComoTexto = respuesta.Result.Content.ReadAsStringAsync().Result;
+                    var movimientos = JsonConvert.DeserializeObject<IEnumerable<MovimientoStockModel>>(objetoComoTexto);
+                    if (!movimientos.Any())
+                    {
+                        return View(new { message = "No hay articulos que hayan pasado por ese movimiento" });
+                    }
+                    return View(movimientos);
+                }
+                return View(new { message = "Tuvimos un problema, por favor trate de vuelta" });
+            }
+            catch(Exception e)
+            {
+                return RedirectToAction("GetMovimientosPorId", new
+                { message = e.Message });
+            }
+
+        }
+
+        #endregion
+
+        #region GetResumenMovimientoPorAño
+
+        public ActionResult GetResumenMovimientoPorAñoYTipo()
+        {
+            try
+            {
+                HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Get,
+                   new Uri(baseURL + "GetMovementsByYearAndType"));
+                Task<HttpResponseMessage> respuesta = cliente.SendAsync(solicitud);
+                respuesta.Wait();
+                if (respuesta.Result.IsSuccessStatusCode)
+                {
+                    var objetoComoTexto = respuesta.Result.Content.ReadAsStringAsync().Result;
+                    var ResumenMovimientos = JsonConvert.DeserializeObject<IEnumerable<ResumenMovimientosModel>>(objetoComoTexto);
+                    
+                    return View(ResumenMovimientos);
+                }
+
+                return RedirectToAction("GetResumenMovimientoPorAñoYTipo", new { mensaje = "Algo sucedio mal, por favor trate de vuelta" });
+            }
+            catch(Exception e)
+            {
+                return RedirectToAction("GetResumenMovimientoPorAñoYTipo", new { mensaje = e.Message });
+            }
+        }
+
+        #endregion
     }
 }

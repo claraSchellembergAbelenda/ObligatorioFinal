@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Papeleria.LogicaAplicacion.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace Papeleria.LogicaAplicacion.InterfacesCU.MovimientoStock
 {
     public interface IGetResumeByYearAndTypeUC
     {
-        public IEnumerable<LogicaNegocios.Entidades.MovimientoStock> ObtenerResumenMovimiento();
+        public IEnumerable<ResumenMovimientosDTO> ObtenerResumenMovimiento();
     }
 }

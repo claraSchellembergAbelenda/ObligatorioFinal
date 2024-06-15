@@ -1,0 +1,17 @@
+﻿@model IEnumerable<MovimientoStockModel>
+@if (!string.IsNullOrEmpty(ViewBag.message))
+{
+    <div class="alert alert-danger">
+        @ViewBag.message
+    </div>
+}
+
+<form method="post" asp-action="GetMovimientosPorId">
+    <div>
+        <label for="idArticulo">Ingrese el id del articulo</label>
+        <input type="number" id="idArticulo" name="idArticulo" v-model="value" class="mb-2"></input>
+        <label for="tipoMovimiento">Ingrese el tipo de movimiento</label>
+        <input type="text" id="tipoMovimiento" name="tipoMovimiento" v-model="value" class="mb-2"></input>
+        <input type="submit" value="ingresar datos" />
+    </div>
+</form>

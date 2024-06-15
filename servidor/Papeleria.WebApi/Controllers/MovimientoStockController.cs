@@ -107,11 +107,6 @@ namespace Papeleria.WebApi.Controllers
 
                 fin = DateTime.ParseExact(fechaFin, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
 
-                //fin = DateTime.Now.AddDays(1);
-                //inicio = DateTime.Now.AddDays(-15);
-
-                //DateTime inicio = DateTime.Parse(fechaInicio);
-                //DateTime fin = DateTime.Parse(fechaFin);
 
                 var articulos = _getArticuloPorFechaMovimiento.GetArticuloPorFechas(inicio, fin);
 
@@ -131,29 +126,8 @@ namespace Papeleria.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult GetMovementsByYearAndType()
         {
-            IEnumerable<MovimientoStockDTO> movimientos =
-                this._getAllMovimientosCU.GetAllMovimientosCU();
-            var result = movimientos.GroupBy(movimientos => movimientos.fechaYHora.Year)
-                .Select(movimientosAgrupados => new ResumenMovimientosDTO
-                {
-                    Año = movimientosAgrupados.Key,
-                    //NombreTipoMovimientos = movimientosAgrupados.Sum<MovimientoStockDTO>(m => m.cantUnidadesMovidas),
-                    TotalCantidadesMovidas = movimientosAgrupados.Sum(mv =>
-                                mv.cantUnidadesMovidas
-                            ),
-                    movimientos = movimientosAgrupados
-                               .GroupBy(movimientos => movimientos.tipoMovimiento)
-                               .Select(movimientos => new MovimientosTipoAño
-                               {
-                                   tipoMovimiento = movimientos.Key,
-                                   cantidadMovimientos = movimientos.Sum(movimiento => movimiento.cantUnidadesMovidas)
-                               }).ToList()
-                }
-                );
-                return Ok(result); ;
+            try { 
             
-            try
-            {
                 return Ok(_getResumeByYearAndTypeUC.ObtenerResumenMovimiento());
 
             }
