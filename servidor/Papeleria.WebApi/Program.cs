@@ -15,6 +15,10 @@ using Papeleria.LogicaAplicacion.CasosDeUso.TipoMovimiento;
 using Papeleria.LogicaNegocios.InterfacesAccesoDatos;
 using Papeleria.LogicaAplicacion.CasosDeUso.MovimientoStock;
 using Papeleria.LogicaAplicacion.InterfacesCU.MovimientoStock;
+using Microsoft.AspNetCore.Authentication.BearerToken;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Papeleria.WebApi
 {
@@ -25,11 +29,6 @@ namespace Papeleria.WebApi
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuarioEF>();
             builder.Services.AddScoped<IRepositorioArticulo, RepositorioArticuloEF>();
             builder.Services.AddScoped<IRepositorioCliente, RepositorioClienteEF>();
@@ -49,6 +48,7 @@ namespace Papeleria.WebApi
             builder.Services.AddScoped<ILoginUsuarioCU, UsuarioLoginCU>();
             builder.Services.AddScoped<IDetailsUsuarioCU, DetailsUsuarioCU>();
             builder.Services.AddScoped<IListarUsuariosUC, ObtenerUsuariosUC>();
+            builder.Services.AddScoped<IEncontrarUsuarioPorEmailCU, EncontrarUsuarioPorEmailCU>();
 
 
             builder.Services.AddScoped<ICrearArticuloCU, CrearArticuloCU>();
@@ -61,7 +61,7 @@ namespace Papeleria.WebApi
             builder.Services.AddScoped<IBuscarEnClientesCU, BuscarEnClientesCU>();
             builder.Services.AddScoped<ICrearClienteCU, CrearClienteCU>();
             builder.Services.AddScoped<IGetClientesCU, GetClientesCU>();
-            
+
             builder.Services.AddScoped<IGetPorTipoMovimientoYArticuloCU, GetPorTipoMovimientoYArticuloCU>();
             builder.Services.AddScoped<IGetArticuloPorFechaMovimiento, GetArticuloPorFechaMovimientoCU>();
             builder.Services.AddScoped<IGetResumeByYearAndTypeUC, ObtenerResumenMovimientoPorAñoCU>();
@@ -77,6 +77,32 @@ namespace Papeleria.WebApi
             builder.Services.AddScoped<IUpdateTipoMovientoCU, UpdateTipoMovimientoCU>();
             builder.Services.AddScoped<IFindTipoMovimientoByNameCU, FindTipoMovimientoByNameCU>();
             builder.Services.AddScoped<IGetAllMovimientosCU, GetAllMovimientosCU>();
+
+            builder.Services.AddControllers();
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddEndpointsApiExplorer();
+
+            var Clave = "+5/68cZ8hG3J1FJ0HgJQ0zZhxh9eNufp0uF2+R5Fnqw=\r\n";
+            builder.Services.AddAuthentication(aut =>
+            {
+                aut.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                aut.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(aut =>
+            {
+                aut.RequireHttpsMetadata = false;
+                aut.SaveToken = true;
+                aut.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Clave)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
+            builder.Services.AddSwaggerGen();
+            
             
 
             var app = builder.Build();
@@ -90,6 +116,8 @@ namespace Papeleria.WebApi
 
             app.UseHttpsRedirection();
 
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

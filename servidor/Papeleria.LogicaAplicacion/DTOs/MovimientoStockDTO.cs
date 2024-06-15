@@ -1,4 +1,5 @@
-﻿using Papeleria.LogicaNegocio.Entidades;
+﻿using Papeleria.LogicaAplicacion.Mappers;
+using Papeleria.LogicaNegocio.Entidades;
 using Papeleria.LogicaNegocios.Entidades;
 using System;
 using System.Collections.Generic;
@@ -40,9 +41,12 @@ namespace Papeleria.LogicaAplicacion.DTOs
             this.id = movimientoStock.id;
             this.fechaYHora = movimientoStock.fechaYHora;
             this.articuloMovidoId = movimientoStock.articuloMovidoId;
+            this.articuloMovido = ArticuloDtoMapper.ToDto(movimientoStock.articuloMovido);
+            this.tipoMovimiento = TipoMovimientoDtoMapper.ToDto(movimientoStock.tipoMovimiento); 
             this.tipoMovimientoId = movimientoStock.tipoMovimientoId;
             this.usuarioId = movimientoStock.usuarioId;
-            this.cantUnidadesMovidas = cantUnidadesMovidas;
+            this.usuario = UsuarioDtoMapper.ToDto(movimientoStock.usuario);
+            this.cantUnidadesMovidas = movimientoStock.cantUnidadesMovidas;
         }
     }
 }

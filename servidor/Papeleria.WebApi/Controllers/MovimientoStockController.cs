@@ -7,6 +7,7 @@ using Papeleria.LogicaAplicacion.InterfacesCU.MovimientoStock;
 using Papeleria.LogicaAplicacion.InterfacesCU.TipoMovimiento;
 using Papeleria.LogicaNegocios.Exceptions.MovimientoStock;
 using Papeleria.LogicaNegocios.Exceptions.TipoMovimiento;
+using System.Linq;
 
 namespace Papeleria.WebApi.Controllers
 {
@@ -102,11 +103,12 @@ namespace Papeleria.WebApi.Controllers
             {
                 DateTime inicio, fin;
 
-                DateTime.TryParse(fechaInicio, out inicio);
-                DateTime.TryParse(fechaFin, out fin);
+                inicio =DateTime.ParseExact(fechaInicio, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
 
-                fin = DateTime.Now.AddDays(1);
-                inicio = DateTime.Now.AddDays(-15);
+                fin = DateTime.ParseExact(fechaFin, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
+
+                //fin = DateTime.Now.AddDays(1);
+                //inicio = DateTime.Now.AddDays(-15);
 
                 //DateTime inicio = DateTime.Parse(fechaInicio);
                 //DateTime fin = DateTime.Parse(fechaFin);
@@ -131,21 +133,25 @@ namespace Papeleria.WebApi.Controllers
         {
             IEnumerable<MovimientoStockDTO> movimientos =
                 this._getAllMovimientosCU.GetAllMovimientosCU();
-
-            //return Ok(movimientos.GroupBy(movimientos => movimientos.fechaYHora.Year)
-            //    .Select(movimientosAgrupados => new ResumenMovimientosDTO
-            //    {
-            //        Año = movimientosAgrupados.Key,
-            //        NombreTipoMovimientos = movimientosAgrupados,
-            //        TotalCantidadesMovidas = movimientosAgrupados.Sum(mv =>
-            //                    mv.cantUnidadesMovidas
-            //                )
-            //    }.ToArray()
-            //    )); ;
-
-
-
-
+            var result = movimientos.GroupBy(movimientos => movimientos.fechaYHora.Year)
+                .Select(movimientosAgrupados => new ResumenMovimientosDTO
+                {
+                    Año = movimientosAgrupados.Key,
+                    //NombreTipoMovimientos = movimientosAgrupados.Sum<MovimientoStockDTO>(m => m.cantUnidadesMovidas),
+                    TotalCantidadesMovidas = movimientosAgrupados.Sum(mv =>
+                                mv.cantUnidadesMovidas
+                            ),
+                    movimientos = movimientosAgrupados
+                               .GroupBy(movimientos => movimientos.tipoMovimiento)
+                               .Select(movimientos => new MovimientosTipoAño
+                               {
+                                   tipoMovimiento = movimientos.Key,
+                                   cantidadMovimientos = movimientos.Sum(movimiento => movimiento.cantUnidadesMovidas)
+                               }).ToList()
+                }
+                );
+                return Ok(result); ;
+            
             try
             {
                 return Ok(_getResumeByYearAndTypeUC.ObtenerResumenMovimiento());

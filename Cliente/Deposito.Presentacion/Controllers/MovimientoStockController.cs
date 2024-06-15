@@ -122,16 +122,16 @@ namespace Deposito.Presentacion.Controllers
         {
             try
             {
-                string inicio = f1.ToString("MM-dd-yyyy");
-                string fin = f2.ToString("MM-dd-yyyy");
+                string inicio = f1.ToString("dd-MM-yyyy");
+                string fin = f2.ToString("dd-MM-yyyy");
                 HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Get, new Uri(baseURL + "Filtrar?fechaInicio=" + inicio +"&fechafin="+ fin));
                 Task<HttpResponseMessage> respuesta = cliente.SendAsync(solicitud);
                 respuesta.Wait();
                 if (respuesta.Result.IsSuccessStatusCode)
                 {
                     var objetoComoTexto = respuesta.Result.Content.ReadAsStringAsync().Result;
-                    var movimientos = JsonConvert.DeserializeObject<IEnumerable<MovimientoStockModel>>(objetoComoTexto);
-                    return View(movimientos);
+                    var articulos = JsonConvert.DeserializeObject<IEnumerable<ArticuloModel>>(objetoComoTexto);
+                    return View(articulos);
                 }
             }
             catch(Exception ex)

@@ -25,8 +25,11 @@ namespace Papeleria.LogicaAplicacion.CasosDeUso.Usuario
         public void UpdateUsuario(UsuarioDTO dto, string password, string aValidar)
         {
             Papeleria.LogicaNegocio.Entidades.Usuario aEditar = _repositorioUsuarios.FindByID(dto.Id);
-            aEditar.esAdmin=dto.esAdmin;
-            aEditar.esEncargado=dto.esEncargado;
+            if(dto.esAdmin!=null || dto.esEncargado!=null)
+            {
+                aEditar.esAdmin=dto.esAdmin;
+                aEditar.esEncargado=dto.esEncargado;
+            }
             aEditar.nombreCompleto.nombre = dto.nombre;
             aEditar.nombreCompleto.apellido = dto.apellido;
             string temporal = password;
