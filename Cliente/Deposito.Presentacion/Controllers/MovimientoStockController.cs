@@ -1,7 +1,9 @@
 ﻿using Deposito.Presentacion.Models;
 using Humanizer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace Deposito.Presentacion.Controllers
 {
@@ -73,31 +75,50 @@ namespace Deposito.Presentacion.Controllers
 
 
         }
-
-        /*[HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddMember(MovimientoStockModel MovimientoStock, string playerName)
+        public ActionResult Create(MovimientoStockModel movimiento)
         {
             try
+            {
 
-            {
-                PlayerModel player = new PlayerModel { Name = playerName };
-                if (tempMovimientoStock == null)
+
+                HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Post, new Uri("https://localhost:44388/api/MovimientoStock"));
+                string json = JsonConvert.SerializeObject(movimiento);
+                HttpContent contenido = new StringContent(json, Encoding.UTF8, "application/json");
+                solicitud.Content = contenido;
+                Task<HttpResponseMessage> respuesta = cliente.SendAsync(solicitud);
+                respuesta.Wait();
+
+                if (respuesta.Result.IsSuccessStatusCode)
                 {
-                    tempMovimientoStock = new MovimientoStockModel { Players = new List<PlayerModel>() };
+                    var objetoComoTexto = respuesta.Result.Content.ReadAsStringAsync().Result;
+                    var m = JsonConvert.DeserializeObject<MovimientoStockModel>(objetoComoTexto);
+                    ViewBag.SuccessMessage = "MovimientoStock creado con éxito";
+                    return View(m);
+
                 }
-                tempMovimientoStock.Players.Add(player);
-                return RedirectToAction(nameof(Create));
+                else
+                {
+                    ViewBag.ErrorMessage = $"Error en la respuesta: {respuesta.Result.StatusCode} - {respuesta.Result.ReasonPhrase}";
+                }
             }
-            catch
+            catch (Exception ex)
             {
+
                 return View();
             }
+
+            return View(movimiento); ;
+
+
+
         }
         */
 
 
         #region GetMovimientosPorFechas
+
         public ActionResult GetMovimientosPorFechas()
         {
             return View();

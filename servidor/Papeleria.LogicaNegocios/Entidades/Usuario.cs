@@ -24,6 +24,17 @@ namespace Papeleria.LogicaNegocio.Entidades
         public bool esAdmin { get; set; }
         public bool esEncargado { get; set; }
         public Usuario() { }
+        public Usuario(int id, string email, string password, string passwordSinEncriptar, NombreCompleto nombreCompleto, bool esAdmin, bool esEncargado)
+        {
+            this.id = id;
+            this.email = email;
+            this.password = password;
+            this.passwordSinEncriptar = passwordSinEncriptar;
+            this.nombreCompleto = nombreCompleto;
+            this.esAdmin = esAdmin;
+            this.esEncargado = esEncargado;
+        }
+
 
         public void EsValido()
         {

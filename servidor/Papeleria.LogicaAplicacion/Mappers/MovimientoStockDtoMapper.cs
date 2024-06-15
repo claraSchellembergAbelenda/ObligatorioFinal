@@ -19,6 +19,7 @@ namespace Papeleria.LogicaAplicacion.Mappers
         }
         public static MovimientoStock FromDto(MovimientoStockDTO dto)
         {
+            
             if (dto == null)
             {
                 throw new MovimientoStockNoValidoException("Articulo es null");
@@ -26,7 +27,9 @@ namespace Papeleria.LogicaAplicacion.Mappers
             Usuario u = UsuarioDtoMapper.FromDto(dto.usuario);
             Articulo a = ArticuloDtoMapper.FromDto(dto.articuloMovido);
             TipoMovimiento tp = TipoMovimientoDtoMapper.FromDto(dto.tipoMovimiento);
-            return new MovimientoStock(dto.id, dto.fechaYHora, a, tp, u, dto.cantUnidadesMovidas);
+            MovimientoStock nuevo = new MovimientoStock(dto.id, dto.fechaYHora, a, tp, u, dto.cantUnidadesMovidas);
+
+            return nuevo;
         }
     }
 }

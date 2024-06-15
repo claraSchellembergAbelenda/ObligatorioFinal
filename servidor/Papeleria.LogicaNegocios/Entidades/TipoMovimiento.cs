@@ -16,6 +16,7 @@ namespace Papeleria.LogicaNegocios.Entidades
         public string nombreMovimiento { get; set; } //unique!!
         public int esPositivo { get; set; }
         public TipoMovimiento() { }
+
         public TipoMovimiento(int id, string nombreMovimiento, int esPositivo)
         {
             this.id = id;

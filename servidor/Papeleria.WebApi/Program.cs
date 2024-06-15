@@ -77,6 +77,7 @@ namespace Papeleria.WebApi
             builder.Services.AddScoped<IUpdateTipoMovientoCU, UpdateTipoMovimientoCU>();
             builder.Services.AddScoped<IFindTipoMovimientoByNameCU, FindTipoMovimientoByNameCU>();
             builder.Services.AddScoped<IGetAllMovimientosCU, GetAllMovimientosCU>();
+            builder.Services.AddScoped<IEncontrarUsuarioPorIdCU,  EncontrarUsuarioPorIdCU>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

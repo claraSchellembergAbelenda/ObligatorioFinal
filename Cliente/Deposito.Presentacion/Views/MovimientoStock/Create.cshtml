@@ -12,7 +12,12 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
+            @if (ViewBag.ErrorMessage != null)
+            {
+                <div class="alert alert-danger">
+                    @ViewBag.ErrorMessage
+                </div>
+            }
             <div class="form-group">
                 <label asp-for="tipoMovimientoId" class="control-label"></label>
                 <select asp-for="tipoMovimientoId" class="form-control">
@@ -22,6 +27,20 @@
                         foreach (var tipo in ViewBag.Tipos)
                         {
                             <option value="@tipo.id">@tipo.nombreMovimiento</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="articuloMovidoId" class="control-label"></label>
+                <select asp-for="articuloMovidoId" class="form-control">
+                    <option value="">Selecciona un articulo de Movimiento</option>
+                    @if (ViewBag.articulos != null)
+                    {
+                        foreach (var articulo in ViewBag.articulos)
+                        {
+                            <option value="@articulo.id">@articulo.nombre</option>
                         }
                     }
                 </select>

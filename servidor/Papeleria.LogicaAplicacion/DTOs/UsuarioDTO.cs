@@ -18,8 +18,9 @@ namespace Papeleria.LogicaAplicacion.DTOs
         public bool esAdmin {  get; set; }
         public bool esEncargado { get; set; }
         public UsuarioDTO() { }
-        public UsuarioDTO(string Email, string Password, string Nombre, string Apellido)
+        public UsuarioDTO(int id, string Email, string Password, string Nombre, string Apellido)
         {
+            Id = id;
             email = Email;
             password = Password;
             nombre = Nombre;
@@ -34,6 +35,7 @@ namespace Papeleria.LogicaAplicacion.DTOs
         {
             if (usuario != null)
             {
+                Id = usuario.id;
                 email = usuario.email;
                 password = usuario.password;
                 nombre = usuario.nombreCompleto.nombre;

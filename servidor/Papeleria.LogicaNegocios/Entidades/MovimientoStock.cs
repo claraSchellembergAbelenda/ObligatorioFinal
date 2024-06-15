@@ -35,8 +35,11 @@ namespace Papeleria.LogicaNegocios.Entidades
             this.id = id;
             this.fechaYHora = fechaYHora;
             this.articuloMovido = articuloMovido;
+            this.articuloMovidoId = articuloMovido.id;
             this.tipoMovimiento = tipoMovimiento;
+            this.tipoMovimientoId = tipoMovimiento.id;
             this.usuario = usuario;
+            this.usuarioId = usuario.id;
             this.cantUnidadesMovidas = cantUnidadesMovidas;
         }
 
