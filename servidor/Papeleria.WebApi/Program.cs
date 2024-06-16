@@ -19,6 +19,10 @@ using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.OpenApi.Models;
+using System.Runtime.Intrinsics;
+using System.Net;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace Papeleria.WebApi
 {
@@ -102,7 +106,32 @@ namespace Papeleria.WebApi
                 };
             });
 
-            builder.Services.AddSwaggerGen();
+            var ruta = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Papeleria.WebApi.xml");
+
+
+            builder.Services.AddSwaggerGen(opciones =>
+                    {
+                    opciones.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme(){
+                        Description = "Autorizacion mediante esqueme Bearer",
+                        In = ParameterLocation.Header,
+                        Name = "Authorization",
+                        Type= SecuritySchemeType.ApiKey
+                    });
+                        opciones.OperationFilter<SecurityRequirementsOperationFilter>();
+                        opciones.IncludeXmlComments(ruta);
+                        opciones.SwaggerDoc("v1", new OpenApiInfo
+                        {
+                            Title = "Documentacion XML de obligatorio M3C 2024",
+                            Description = "Aplicacion web para poder exonerar la materia :)",
+                            Contact = new OpenApiContact
+                            {
+                                Email = "clarasche@gmail.com"
+                            },
+                            Version = "v1"
+                        }) ;
+
+                    }
+                );
             
             
 

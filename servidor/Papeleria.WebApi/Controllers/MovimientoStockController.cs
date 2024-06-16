@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Papeleria.LogicaAplicacion.CasosDeUso.MovimientoStock;
 using Papeleria.LogicaAplicacion.DTOs;
@@ -13,6 +14,7 @@ namespace Papeleria.WebApi.Controllers
 {
     [ApiController]
     [Route("api/MovimientoStock")]
+    [Authorize]
     public class MovimientoStockController : Controller
     {
         // GET: MovimientoStockController
@@ -46,15 +48,8 @@ namespace Papeleria.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-
-        //public ActionResult ObtenerMovimientosPorArticuloYTipo(string message)
-        //{
-        //    ViewBag.message = message;
-        //    return View();
-        //}
-        //esta bien q el idArticulo y el tipoMovimiento se reciban como las fechas?
-
 
         public ActionResult ObtenerMovimientosPorArticuloYTipo(int idArticulo, string tipoMovimiento)
         {
@@ -94,6 +89,7 @@ namespace Papeleria.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 
        
@@ -123,6 +119,7 @@ namespace Papeleria.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult GetMovementsByYearAndType()
         {
@@ -146,6 +143,7 @@ namespace Papeleria.WebApi.Controllers
         [HttpPost("")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<MovimientoStockDTO> Create([FromBody] MovimientoStockDTO dto)
         {

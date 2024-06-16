@@ -19,10 +19,34 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+                        @if (string.IsNullOrEmpty(Context.Session.GetString("email"))){
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Login</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="MovimientoStock" asp-action="Create">Crear Movimiento de Stock</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area=""
+                                   asp-controller="MovimientoStock" asp-action="GetMovimientosPorFechas">Ver movimientos por fechas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area=""
+                                   asp-controller="MovimientoStock" asp-action="GetMovimientosPorId">Ver movimientos por id de articulo y tipo de movimiento</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area=""
+                                   asp-controller="MovimientoStock" asp-action="GetResumenMovimientoPorAñoYTipo">Ver resumen de movimientos por año</a>
+                            </li>
+                        }
                         
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="MovimientoStock" asp-action="Create">Crear Movimiento de Stock</a>
-                        </li>
                     </ul>
                 </div>
             </div>

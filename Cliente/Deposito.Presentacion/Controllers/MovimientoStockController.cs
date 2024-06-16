@@ -114,7 +114,7 @@ namespace Deposito.Presentacion.Controllers
 
 
         }
-        */
+        
 
 
         #region GetMovimientosPorFechas
@@ -128,6 +128,15 @@ namespace Deposito.Presentacion.Controllers
         {
             try
             {
+                string token = HttpContext.Session.GetString("token");
+                if (string.IsNullOrEmpty(token))
+                {
+                    return RedirectToAction("Index", "Home", new { message = "Usted no esta autenticado, por favor inicie sesion" });
+                }
+                cliente.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(
+                    "Bearer",
+                    token
+                    );
                 string inicio = f1.ToString("dd-MM-yyyy");
                 string fin = f2.ToString("dd-MM-yyyy");
                 HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Get, new Uri(baseURL + "Filtrar?fechaInicio=" + inicio +"&fechafin="+ fin));
