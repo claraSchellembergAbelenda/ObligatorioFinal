@@ -73,7 +73,7 @@ namespace Papeleria.AccesoDatos.EntityFramework.Repositorios
 
         public IEnumerable<MovimientoStock> FindAll()
         {
-            return _context.MovimientosStock.Include(mv => mv.tipoMovimiento);
+            return _context.MovimientosStock.Include(mv => mv.tipoMovimiento).ThenInclude(tp => tp.nombreMovimiento);
         }
 
         public MovimientoStock FindByID(int id)
