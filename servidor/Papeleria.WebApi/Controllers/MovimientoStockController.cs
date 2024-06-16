@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Papeleria.LogicaAplicacion.CasosDeUso.MovimientoStock;
+using Papeleria.LogicaAplicacion.CasosDeUso.Usuario;
 using Papeleria.LogicaAplicacion.DTOs;
 using Papeleria.LogicaAplicacion.InterfacesCU.Articulos;
 using Papeleria.LogicaAplicacion.InterfacesCU.MovimientoStock;
 using Papeleria.LogicaAplicacion.InterfacesCU.TipoMovimiento;
+using Papeleria.LogicaAplicacion.InterfacesCU.Usuarios;
 using Papeleria.LogicaNegocios.Exceptions.MovimientoStock;
 using Papeleria.LogicaNegocios.Exceptions.TipoMovimiento;
 using System.Linq;
@@ -20,16 +22,20 @@ namespace Papeleria.WebApi.Controllers
         private IGetArticuloPorFechaMovimiento _getArticuloPorFechaMovimiento;
         private IGetResumeByYearAndTypeUC _getResumeByYearAndTypeUC;
         private IExisteTipoCU _existeTipoMovimientoCU;
+
+        private IFindTipoMovimientoCU _findTipoMovimientoCU;
         private IFindByIDArticuloCU _findArticuloByIdCU;
+        private IEncontrarUsuarioPorIdCU _encontrarUsuarioPorIdCU;
         private ICrearMovimientoStockCU _crearMovimientoStockCU;
         private IFindTipoMovimientoByNameCU _findTipoMovimientoByNameCU;
         private IGetAllMovimientosCU _getAllMovimientosCU;
+
 
         public MovimientoStockController(IGetPorTipoMovimientoYArticuloCU getMovimientos, 
             IGetArticuloPorFechaMovimiento getArticuloPorFechaMovimiento, 
             IGetResumeByYearAndTypeUC getResumeByYearAndTypeUC, IExisteTipoCU existeTipoMovimientoCU,
             IFindByIDArticuloCU findByIDArticuloCU,  ICrearMovimientoStockCU crearMovimientoStockCU, IFindTipoMovimientoCU findTipoMovimientoCU,
-            IFindTipoMovimientoByNameCU findTipoMovimientoByNameCU, IGetAllMovimientosCU getAllMovimientosCU)
+            IFindTipoMovimientoByNameCU findTipoMovimientoByNameCU, IGetAllMovimientosCU getAllMovimientosCU, IEncontrarUsuarioPorIdCU encontrarUsuarioPorIdCU)
         {
             _getMovimientosPorTipo = getMovimientos;
             _getArticuloPorFechaMovimiento = getArticuloPorFechaMovimiento;
@@ -39,6 +45,9 @@ namespace Papeleria.WebApi.Controllers
             _crearMovimientoStockCU = crearMovimientoStockCU;
             _findTipoMovimientoByNameCU = findTipoMovimientoByNameCU;
             _getAllMovimientosCU = getAllMovimientosCU;
+            _findTipoMovimientoCU = findTipoMovimientoCU;
+            _encontrarUsuarioPorIdCU = encontrarUsuarioPorIdCU;
+            
         }
 
 
@@ -175,9 +184,16 @@ namespace Papeleria.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<MovimientoStockDTO> Create([FromBody] MovimientoStockDTO dto)
         {
+            
+            dto.articuloMovido = _findArticuloByIdCU.EncontrarPorIdArticulo(dto.articuloMovidoId);
+            dto.tipoMovimiento = _findTipoMovimientoCU.FindTipoMovimiento(dto.tipoMovimientoId);
+            dto.usuario = _encontrarUsuarioPorIdCU.EncontrarUsuarioPorId(dto.usuarioId);
+
+
+
             if (dto == null)
             {
-                return BadRequest("Invalid data.");
+                return BadRequest("Dto vacío");
             }
             try
             {
@@ -187,6 +203,7 @@ namespace Papeleria.WebApi.Controllers
             }
             catch (MovimientoStockNoValidoException ex)
             {
+                
                 return BadRequest(ex.Message);
             }
 

@@ -3,6 +3,7 @@ using Humanizer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Newtonsoft.Json;
+using System.Net;
 using System.Text;
 
 namespace Deposito.Presentacion.Controllers
@@ -81,12 +82,11 @@ namespace Deposito.Presentacion.Controllers
         {
             try
             {
-
-
                 HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Post, new Uri("https://localhost:44388/api/MovimientoStock"));
                 string json = JsonConvert.SerializeObject(movimiento);
                 HttpContent contenido = new StringContent(json, Encoding.UTF8, "application/json");
                 solicitud.Content = contenido;
+
                 Task<HttpResponseMessage> respuesta = cliente.SendAsync(solicitud);
                 respuesta.Wait();
 
@@ -96,7 +96,11 @@ namespace Deposito.Presentacion.Controllers
                     var m = JsonConvert.DeserializeObject<MovimientoStockModel>(objetoComoTexto);
                     ViewBag.SuccessMessage = "MovimientoStock creado con éxito";
                     return View(m);
-
+                }
+                else if (respuesta.Result.StatusCode == HttpStatusCode.BadRequest)
+                {
+                    var mensajeError = respuesta.Result.Content.ReadAsStringAsync().Result;
+                    ViewBag.ErrorMessage = mensajeError; 
                 }
                 else
                 {
@@ -105,15 +109,48 @@ namespace Deposito.Presentacion.Controllers
             }
             catch (Exception ex)
             {
-
-                return View();
+                ViewBag.ErrorMessage = "Error al procesar la solicitud.";
             }
 
-            return View(movimiento); ;
-
-
-
+            return View(movimiento);
         }
+        //public ActionResult Create(MovimientoStockModel movimiento)
+        //{
+        //    try
+        //    {
+
+
+        //        HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Post, new Uri("https://localhost:44388/api/MovimientoStock"));
+        //        string json = JsonConvert.SerializeObject(movimiento);
+        //        HttpContent contenido = new StringContent(json, Encoding.UTF8, "application/json");
+        //        solicitud.Content = contenido;
+        //        Task<HttpResponseMessage> respuesta = cliente.SendAsync(solicitud);
+        //        respuesta.Wait();
+
+        //        if (respuesta.Result.IsSuccessStatusCode)
+        //        {
+        //            var objetoComoTexto = respuesta.Result.Content.ReadAsStringAsync().Result;
+        //            var m = JsonConvert.DeserializeObject<MovimientoStockModel>(objetoComoTexto);
+        //            ViewBag.SuccessMessage = "MovimientoStock creado con éxito";
+        //            return View(m);
+
+        //        }
+        //        else
+        //        {
+        //            ViewBag.ErrorMessage = $"Error en la respuesta: {respuesta.Result.StatusCode} - {respuesta.Result.ReasonPhrase}";
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        return View();
+        //    }
+
+        //    return View(movimiento); ;
+
+
+
+        //}
 
         public ActionResult GetMovimientosPorFechas()
         {
