@@ -36,6 +36,7 @@ namespace Papeleria.WebApi
             builder.Services.AddScoped<IRepositorioLinea, RepositorioLineaEF>();
             builder.Services.AddScoped<IRepositorioMovimientoStock, RepositorioMovimientoStockEF>();
             builder.Services.AddScoped<IRepositorioTipoMovimiento, RepositorioTipoMovimientoEF>();
+            builder.Services.AddScoped<IRepositorioSetting, RepositorioSettings>();
 
 
 

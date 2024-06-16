@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using Papeleria.LogicaNegocios.Exceptions.MovimientoStock;
 
 namespace Papeleria.LogicaAplicacion.CasosDeUso.MovimientoStock
 {
@@ -18,22 +20,32 @@ namespace Papeleria.LogicaAplicacion.CasosDeUso.MovimientoStock
 
         
         private  IRepositorioMovimientoStock _repositorioMovimientoStock;
+        private IRepositorioSetting _repositorioSetting;
 
 
 
-        public CrearMovimientoStockCU(IRepositorioMovimientoStock repositorioMovimientoStock)
+        public CrearMovimientoStockCU(IRepositorioMovimientoStock repositorioMovimientoStock, IRepositorioSetting repositorioSetting)
         {
             _repositorioMovimientoStock = repositorioMovimientoStock;
-            
+            _repositorioSetting = repositorioSetting;
         }
 
 
         public void CrearMovimiento(MovimientoStockDTO dto) 
         {
+            double tope = _repositorioSetting.GetValueByName("topeStock");
             
-            
+            if (dto.cantUnidadesMovidas > tope)
+            {
+                
+                throw new MovimientoStockNoValidoException("La cantidad de unidades no puede superar " + tope);
+            }
+        
+            else
+            {
             _repositorioMovimientoStock.Add(MovimientoStockDtoMapper.FromDto(dto));
-
+            }
+            
         }
     }
 }

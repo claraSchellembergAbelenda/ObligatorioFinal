@@ -127,66 +127,36 @@ namespace Papeleria.WebApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-        [HttpGet("GetMovementsByYearAndType")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult GetMovementsByYearAndType()
-        {
-            try { 
-            
-                return Ok(_getResumeByYearAndTypeUC.ObtenerResumenMovimiento());
-
-            }
-            catch (MovimientoStockNoValidoException mv)
-            {
-                return BadRequest(mv.Message);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-
-        
-
         [HttpPost("")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<MovimientoStockDTO> Create([FromBody] MovimientoStockDTO dto)
         {
-            
-            dto.articuloMovido = _findArticuloByIdCU.EncontrarPorIdArticulo(dto.articuloMovidoId);
-            dto.tipoMovimiento = _findTipoMovimientoCU.FindTipoMovimiento(dto.tipoMovimientoId);
-            dto.usuario = _encontrarUsuarioPorIdCU.EncontrarUsuarioPorId(dto.usuarioId);
-
-
-
             if (dto == null)
             {
                 return BadRequest("Dto vacío");
             }
+            
             try
             {
+                dto.articuloMovido = _findArticuloByIdCU.EncontrarPorIdArticulo(dto.articuloMovidoId);
+                dto.tipoMovimiento = _findTipoMovimientoCU.FindTipoMovimiento(dto.tipoMovimientoId);
+                dto.usuario = _encontrarUsuarioPorIdCU.EncontrarUsuarioPorId(dto.usuarioId);
 
                 _crearMovimientoStockCU.CrearMovimiento(dto);
                 return Created("api/MovimientoStock", dto);
             }
             catch (MovimientoStockNoValidoException ex)
             {
-                
                 return BadRequest(ex.Message);
             }
-
             catch (Exception ex)
             {
-                return BadRequest("Error inesperado con la base de datos");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error inesperado con la base de datos");
             }
-
-
         }
+
+        
     }
 }

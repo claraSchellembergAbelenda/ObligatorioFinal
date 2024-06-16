@@ -55,7 +55,6 @@ namespace Papeleria.LogicaNegocios.Entidades
                 throw new MovimientoStockNoValidoException("las unidades a mover deben ser positivas");
             }
            
-            //if(cantUnidadesMovidas > IRepositorioSettings.GetValueByName())
         }
         public void ValidarArticulo()
         {
