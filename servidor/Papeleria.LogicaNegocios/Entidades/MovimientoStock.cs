@@ -47,6 +47,15 @@ namespace Papeleria.LogicaNegocios.Entidades
         {
             ValidarStock();
             ValidarArticulo();
+            ValidarTipo();
+        }
+
+        public void ValidarTipo() 
+        {
+            if (this.tipoMovimiento.esPositivo == 0)
+            {
+                throw new MovimientoStockNoValidoException("El tipo de movimiento debe aludir a un movimiento de stock, es decir que no puede ser algo donde el mismo no cambie");
+            }
         }
         public void ValidarStock()
         {

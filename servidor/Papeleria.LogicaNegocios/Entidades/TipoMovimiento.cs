@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using Microsoft.Win32;
 using Papeleria.LogicaNegocio.InterfacesEntidades;
 using Papeleria.LogicaNegocios.Exceptions.TipoMovimiento;
@@ -6,6 +7,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Papeleria.LogicaNegocios.Entidades
 {
+    [Index(nameof(nombreMovimiento), IsUnique = true)]
     public class TipoMovimiento : IValidable<TipoMovimiento>
     {
         //Los tipos de movimiento constan de un Id, un nombre único, (por ejemplo “Venta”, “Devolución”,
@@ -26,9 +28,9 @@ namespace Papeleria.LogicaNegocios.Entidades
 
         public void validarSigno()
         {
-            if(esPositivo!=1 && esPositivo!=-1)
+            if(esPositivo!=1 && esPositivo!=-1 && esPositivo!=0)
             {
-                throw new TipoMovimientoNoValidoException();
+                throw new TipoMovimientoNoValidoException("el signo de el tipo de movimiento solo puede ser 1, -1 o 0 en casos como de traslado");
             }
         }
         public void EsValido()
