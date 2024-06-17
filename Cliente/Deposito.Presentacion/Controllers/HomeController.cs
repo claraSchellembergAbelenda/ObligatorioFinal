@@ -26,7 +26,7 @@ namespace Deposito.Presentacion.Controllers
 
         public IActionResult Login(string email, string password) 
         {
-            HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Get, new Uri(baseURL));
+            HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Post, new Uri(baseURL));
             UsuarioModel model = new UsuarioModel();
             model.email= email;
             model.password = password;

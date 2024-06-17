@@ -11,11 +11,11 @@ namespace Papeleria.LogicaAplicacion.DTOs
     {
         public int id { get; set; }
         public string email { get; set; }
-        public string nombre { get; set; }
-        public string apellido { get; set; }
-        public bool esAdmin { get; set; }
+        public string? nombre { get; set; }
+        public string? apellido { get; set; }
+        public bool? esAdmin { get; set; }
 
-        public bool esEncargado { get; set; }
+        public bool? esEncargado { get; set; }
         public UsuarioIndexDTO() { }
 
         public UsuarioIndexDTO(Usuario usuario)

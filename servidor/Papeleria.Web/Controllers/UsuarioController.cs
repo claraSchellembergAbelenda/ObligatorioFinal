@@ -124,7 +124,7 @@ namespace Papeleria.Web.Controllers
         {
             ViewBag.mensaje = mensaje;
             UsuarioDTO usuario = _encontrarUsuarioPorEmail.EncontrarUsuarioPorEmail(HttpContext.Session.GetString("LogueadoCorreo"));
-            if (usuario.esAdmin)
+            if (usuario.esAdmin == true)
             {
                 return View();
             }
@@ -156,7 +156,7 @@ namespace Papeleria.Web.Controllers
         {
             ViewBag.mensaje = mensaje;
             UsuarioDTO usuario = _encontrarUsuarioPorEmail.EncontrarUsuarioPorEmail(HttpContext.Session.GetString("LogueadoCorreo"));
-            if (usuario.esAdmin)
+            if (usuario.esAdmin == true)
             {
                 return View(_recibeIdDevuelveUsuarioCU.RecibeIdDevuelveUsuario(id));
             }
@@ -186,7 +186,7 @@ namespace Papeleria.Web.Controllers
         {
             ViewBag.mensaje = mensaje;
             UsuarioDTO usuario = _encontrarUsuarioPorEmail.EncontrarUsuarioPorEmail(HttpContext.Session.GetString("LogueadoCorreo"));
-            if (usuario.esAdmin)
+            if (usuario.esAdmin == true)
             {
                 return View(_recibeIdDevuelveUsuarioCU.RecibeIdDevuelveUsuario(id));
             }

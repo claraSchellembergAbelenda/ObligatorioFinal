@@ -5,6 +5,7 @@
         @ViewBag.message
     </div>
 }
+<h1>Ver movimientos por id de articulo y tipo de movimiento</h1>
 
 <form method="post" asp-action="GetMovimientosPorId">
     <div>
@@ -15,3 +16,51 @@
         <input type="submit" value="ingresar datos" />
     </div>
 </form>
+
+@if (Model != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.fechaYHora)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.articuloMovido.nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tipoMovimiento.nombreMovimiento)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.usuario.email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.cantUnidadesMovidas)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fechaYHora)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.articuloMovido.nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tipoMovimiento.nombreMovimiento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.usuario.email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.cantUnidadesMovidas)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

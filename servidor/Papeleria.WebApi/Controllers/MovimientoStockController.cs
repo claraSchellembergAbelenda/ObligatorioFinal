@@ -16,7 +16,7 @@ namespace Papeleria.WebApi.Controllers
 {
     [ApiController]
     [Route("api/MovimientoStock")]
-    [Authorize]
+    //[Authorize]
     public class MovimientoStockController : Controller
     {
         // GET: MovimientoStockController

@@ -19,7 +19,19 @@ namespace Deposito.Presentacion.Controllers
             baseURL = "https://localhost:44388/api/MovimientoStock/";
         }
 
-      
+        private bool ValidarUsuario() {
+            string token = HttpContext.Session.GetString("token");
+            if (string.IsNullOrEmpty(token))
+            {
+                return false;
+            }
+            cliente.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(
+                "Bearer",
+                token
+                );
+            return true;
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -29,8 +41,6 @@ namespace Deposito.Presentacion.Controllers
         {
             try
             {
-                
-
                 HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Get, new Uri("https://localhost:44388/api/TipoMovimiento"));
                 Task<HttpResponseMessage> respuesta = cliente.SendAsync(solicitud);
                 respuesta.Wait();
@@ -50,8 +60,6 @@ namespace Deposito.Presentacion.Controllers
             }
             try
             {
-
-
                 HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Get, new Uri("https://localhost:44388/api/Articulos"));
                 Task<HttpResponseMessage> respuesta = cliente.SendAsync(solicitud);
                 respuesta.Wait();
@@ -162,15 +170,10 @@ namespace Deposito.Presentacion.Controllers
         {
             try
             {
-                string token = HttpContext.Session.GetString("token");
-                if (string.IsNullOrEmpty(token))
+                if (!ValidarUsuario())
                 {
                     return RedirectToAction("Index", "Home", new { message = "Usted no esta autenticado, por favor inicie sesion" });
                 }
-                cliente.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(
-                    "Bearer",
-                    token
-                    );
                 string inicio = f1.ToString("dd-MM-yyyy");
                 string fin = f2.ToString("dd-MM-yyyy");
                 HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Get, new Uri(baseURL + "Filtrar?fechaInicio=" + inicio +"&fechafin="+ fin));
@@ -220,11 +223,11 @@ namespace Deposito.Presentacion.Controllers
                     var movimientos = JsonConvert.DeserializeObject<IEnumerable<MovimientoStockModel>>(objetoComoTexto);
                     if (!movimientos.Any())
                     {
-                        return View(new { message = "No hay articulos que hayan pasado por ese movimiento" });
+                        return RedirectToAction("GetMovimientosPorId", new { message = "No hay articulos que hayan pasado por ese movimiento" });
                     }
                     return View(movimientos);
                 }
-                return View(new { message = "Tuvimos un problema, por favor trate de vuelta" });
+                return RedirectToAction("GetMovimientosPorId", new { message = "Tuvimos un problema, por favor trate de vuelta" });
             }
             catch (Exception e)
             {
@@ -254,11 +257,11 @@ namespace Deposito.Presentacion.Controllers
                     return View(ResumenMovimientos);
                 }
 
-                return RedirectToAction("GetResumenMovimientoPorAñoYTipo", new { mensaje = "Algo sucedio mal, por favor trate de vuelta" });
+                return RedirectToAction("Index", "Home", new { mensaje = "Algo sucedio mal, por favor trate de vuelta" });
             }
             catch (Exception e)
             {
-                return RedirectToAction("GetResumenMovimientoPorAñoYTipo", new { mensaje = e.Message });
+                return RedirectToAction("Index", "Home", new { mensaje = e.Message });
             }
         }
 

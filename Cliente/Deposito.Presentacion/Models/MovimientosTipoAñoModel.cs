@@ -2,9 +2,7 @@
 {
     public class MovimientosTipoAñoModel
     {
-
-        public TipoMovimientoModel tipoMovimiento { get; set; }
-        //public List<MovimientoStockDTO> movimientos;
+        public string nombreTipoMovimiento { get; set; }
         public int cantidadMovimientos { get; set; }
     }
 }

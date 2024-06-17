@@ -25,15 +25,15 @@ namespace Papeleria.LogicaAplicacion.CasosDeUso.MovimientoStock
                     .Select(movimientosAgrupados => new ResumenMovimientosDTO
                     {
                         Año = movimientosAgrupados.Key,
-                        //NombreTipoMovimientos = movimientosAgrupados.,
+                        //NombreTipoMovimientos = movimientosAgrupados,
                         TotalCantidadesMovidas = movimientosAgrupados.Sum(mv =>
                                     mv.cantUnidadesMovidas
                                 ),
                         movimientos = movimientosAgrupados
-                                   .GroupBy(movimientos => movimientos.tipoMovimiento)
+                                   .GroupBy(movimientos => movimientos.tipoMovimiento.nombreMovimiento)
                                    .Select(movimientos => new MovimientosTipoAño
                                    {
-                                       tipoMovimiento = movimientos.Key,
+                                       nombreTipoMovimiento = movimientos.Key,
                                        cantidadMovimientos = movimientos.Sum(movimiento => movimiento.cantUnidadesMovidas)
                                    }).ToList()
                     }

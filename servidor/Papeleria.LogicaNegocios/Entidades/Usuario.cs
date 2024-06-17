@@ -20,11 +20,11 @@ namespace Papeleria.LogicaNegocio.Entidades
         public string email { get; set; }
         public string password { get; set; }
         public string passwordSinEncriptar { get; set; }
-        public NombreCompleto nombreCompleto { get; set; }
-        public bool esAdmin { get; set; }
-        public bool esEncargado { get; set; }
+        public NombreCompleto? nombreCompleto { get; set; }
+        public bool? esAdmin { get; set; }
+        public bool? esEncargado { get; set; }
         public Usuario() { }
-        public Usuario(int id, string email, string password, string passwordSinEncriptar, NombreCompleto nombreCompleto, bool esAdmin, bool esEncargado)
+        public Usuario(int id, string email, string password, string passwordSinEncriptar, NombreCompleto? nombreCompleto, bool? esAdmin, bool? esEncargado)
         {
             this.id = id;
             this.email = email;
@@ -58,7 +58,7 @@ namespace Papeleria.LogicaNegocio.Entidades
         }
         public void ValidarPosicion()
         {
-            if(this.esAdmin&&this.esEncargado)
+            if(this.esAdmin==true&&this.esEncargado==true)
             {
                 throw new UsuarioNoValidoException("Un usuario no puede ser administrador y encargado a la misma vez");
             }

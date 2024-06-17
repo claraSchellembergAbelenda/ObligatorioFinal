@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Deposito.Presentacion.Models.ResumenMovimientosModel>
+﻿@* @model IEnumerable<Deposito.Presentacion.Models.ResumenMovimientosModel>
 
 @{
     ViewData["Title"] = "GetResumenMovimientoPorAñoYTipo";
@@ -13,7 +13,7 @@
                 @Html.DisplayNameFor(model => model.Año)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NombreTipoMovimientos)
+                @Html.DisplayNameFor(model => model.movimientos.nombreTipoMovimiento)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TotalCantidadesMovidas)
@@ -28,12 +28,23 @@
                 @Html.DisplayFor(modelItem => item.Año)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NombreTipoMovimientos)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.TotalCantidadesMovidas)
             </td>
         </tr>
 }
     </tbody>
-</table>
+</table> *@
+
+
+@model List<ResumenMovimientosModel>
+
+@foreach (var año in Model)
+{
+    <h2>Año: @año.Año</h2>
+    @foreach (var movimiento in año.movimientos)
+    {
+        <p>Tipo: @movimiento.nombreTipoMovimiento – Cantidad: @movimiento.cantidadMovimientos</p>
+    }
+    <h3>Total año @año.Año : @año.TotalCantidadesMovidas</h3>
+}
+

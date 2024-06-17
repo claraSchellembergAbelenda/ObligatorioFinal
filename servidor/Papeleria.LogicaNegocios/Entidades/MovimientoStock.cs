@@ -69,9 +69,14 @@ namespace Papeleria.LogicaNegocios.Entidades
         //▪ El usuario exista, y se haya autenticado con rol encargado.
         public void ValidarUsuario()
         {
-            if (usuario == null || !usuario.esEncargado)
+            if (usuario == null)//esto no valida que exista, aca hay que checkear con la base de datos
             {
-                throw new MovimientoStockNoValidoException("el usuario debe ser encargado");
+                throw new MovimientoStockNoValidoException("el usuario debe estar");
+            }
+            if (usuario.esEncargado==false) 
+            {
+
+                throw new MovimientoStockNoValidoException("el usuario debe se encargado para poder iniciar sesion");
             }
         }
 

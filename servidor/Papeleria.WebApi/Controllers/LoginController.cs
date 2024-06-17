@@ -12,10 +12,12 @@ namespace Papeleria.WebApi.Controllers
     public class LoginController : ControllerBase
     {
         private IEncontrarUsuarioPorEmailCU _findUserByMailCU;
+        private ILoginUsuarioCU _loginUsuario;
 
-        public LoginController(IEncontrarUsuarioPorEmailCU findUserByMailCU)
+        public LoginController(IEncontrarUsuarioPorEmailCU findUserByMailCU, ILoginUsuarioCU loginUsuario)
         {
             _findUserByMailCU = findUserByMailCU;
+            _loginUsuario = loginUsuario;
         }
 
         /// <summary>
@@ -34,16 +36,22 @@ namespace Papeleria.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 
-        public ActionResult<UsuarioDTO> Login([FromBody] UsuarioDTO usuarioDTO)
+        public ActionResult<UsuarioDTO> Login([FromBody] LoginDTO loginDTO)
         {
             try
             {
                 ManejadorJWT handler = new ManejadorJWT(_findUserByMailCU);
-                var usr = handler.ObtenerUsuario(usuarioDTO.email);
-                if(usr==null || usr.password!= usuarioDTO.password)
+                var usr = handler.ObtenerUsuario(loginDTO.email);
+                if (_loginUsuario.LoginUsuario(loginDTO.email, loginDTO.password) == null)
                 {
                     return Unauthorized("Credenciales invalidas. Por favor reintente");
                 }
+                //HttpContext.Session.SetString("email", loginDTO.email);
+
+                //if(usr==null || usr.password!= loginDTO.password)
+                //{
+                //    return Unauthorized("Credenciales invalidas. Por favor reintente");
+                //}
                 var token = ManejadorJWT.GenerarToken(usr);
                 return Ok(new
                 {

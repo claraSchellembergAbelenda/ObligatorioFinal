@@ -9,7 +9,6 @@ namespace Papeleria.LogicaAplicacion.DTOs
     public class ResumenMovimientosDTO
     {
         public int Año { get; set; }
-        public string NombreTipoMovimientos { get; set; }
         public int TotalCantidadesMovidas { get; set; }
         public List<MovimientosTipoAño> movimientos { get; set; }
     }

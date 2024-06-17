@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Papeleria.LogicaAplicacion.DTOs
 {
-    public class MovimientosTipoAño
+    public class LoginDTO
     {
-        public string nombreTipoMovimiento {  get; set; }
-        public int cantidadMovimientos { get; set; }
-
+        public string email { get; set; }
+        public string password { get; set; }
     }
 }

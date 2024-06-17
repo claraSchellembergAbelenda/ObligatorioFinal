@@ -64,7 +64,7 @@ namespace Papeleria.Web.Controllers
         {
             ViewBag.mensaje = mensaje;
             UsuarioDTO usuario = _encontrarUsuarioPorEmailCU.EncontrarUsuarioPorEmail(HttpContext.Session.GetString("LogueadoCorreo"));
-            if (usuario.esAdmin)
+            if (usuario.esAdmin == true)
             {
                 ViewBag.Clientes = _getClientesCU.GetClienteDTOs();
                 if (tempPedido != null)
