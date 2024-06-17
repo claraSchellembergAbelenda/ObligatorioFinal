@@ -33,7 +33,7 @@ namespace Papeleria.LogicaNegocios.Entidades
         public MovimientoStock(int id, DateTime fechaYHora, Articulo articuloMovido, TipoMovimiento tipoMovimiento, Usuario usuario, int cantUnidadesMovidas)
         {
             this.id = id;
-            this.fechaYHora = fechaYHora;
+            this.fechaYHora = DateTime.Now;
             this.articuloMovido = articuloMovido;
             this.articuloMovidoId = articuloMovido.id;
             this.tipoMovimiento = tipoMovimiento;
@@ -50,11 +50,11 @@ namespace Papeleria.LogicaNegocios.Entidades
         }
         public void ValidarStock()
         {
-            if(cantUnidadesMovidas<=0)
+            if (cantUnidadesMovidas <= 0)
             {
-                throw new MovimientoStockNoValidoException("Las unidades a mover deben ser positivas");
+                throw new MovimientoStockNoValidoException("las unidades a mover deben ser positivas");
             }
-            //if(cantUnidadesMovidas > IRepositorioSettings.GetValueByName())
+           
         }
         public void ValidarArticulo()
         {
@@ -69,21 +69,21 @@ namespace Papeleria.LogicaNegocios.Entidades
         //▪ El usuario exista, y se haya autenticado con rol encargado.
         public void ValidarUsuario()
         {
-            if (this.usuario.esEncargado == false)
+            if (usuario == null || !usuario.esEncargado)
             {
                 throw new MovimientoStockNoValidoException("el usuario debe ser encargado");
             }
         }
 
         //▪ Solo se manejan ingresos y egresos.
-        public void ValidarTipoMovimiento()
-        {
-            if(this.tipoMovimiento.nombreMovimiento.ToUpper() != "venta".ToUpper()
-                && this.tipoMovimiento.nombreMovimiento.ToUpper() != "devolucion".ToUpper())
-            {
-                throw new MovimientoStockNoValidoException("no se puede ingresar un movimiento que no sea de ingresos o egresos");
-            }
-        }
+        //public void ValidarTipoMovimiento()
+        //{
+        //    if(this.tipoMovimiento.nombreMovimiento.ToUpper() != "venta".ToUpper()
+        //        && this.tipoMovimiento.nombreMovimiento.ToUpper() != "devolucion".ToUpper())
+        //    {
+        //        throw new MovimientoStockNoValidoException("no se puede ingresar un movimiento que no sea de ingresos o egresos");
+        //    }
+        //}
 
         //El tipo de movimiento de stock sea uno de los existentes.
 
