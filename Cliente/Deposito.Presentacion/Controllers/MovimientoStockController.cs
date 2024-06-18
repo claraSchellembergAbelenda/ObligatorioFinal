@@ -12,6 +12,7 @@ namespace Deposito.Presentacion.Controllers
     {
         private HttpClient cliente;
         private string baseURL;
+        private static int actualPage;
         public MovimientoStockController() 
         {
 
@@ -170,13 +171,14 @@ namespace Deposito.Presentacion.Controllers
         {
             try
             {
+                if (actualPage < 1) { actualPage = 1; }
                 if (!ValidarUsuario())
                 {
                     return RedirectToAction("Index", "Home", new { message = "Usted no esta autenticado, por favor inicie sesion" });
                 }
                 string inicio = f1.ToString("dd-MM-yyyy");
                 string fin = f2.ToString("dd-MM-yyyy");
-                HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Get, new Uri(baseURL + "Filtrar?fechaInicio=" + inicio +"&fechafin="+ fin));
+                HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Get, new Uri(baseURL + "Filtrar?fechaInicio=" + inicio +"&fechafin="+ fin + "/page/" + actualPage));
                 Task<HttpResponseMessage> respuesta = cliente.SendAsync(solicitud);
                 respuesta.Wait();
                 if (respuesta.Result.IsSuccessStatusCode)
@@ -207,6 +209,7 @@ namespace Deposito.Presentacion.Controllers
         {
             try
             {
+                if (actualPage < 1) { actualPage = 1; }
                 if (idArticulo <= 0 || string.IsNullOrEmpty(tipoMovimiento))
                 {
                     return View(new
@@ -214,7 +217,7 @@ namespace Deposito.Presentacion.Controllers
                 }
 
                 HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Get,
-                    new Uri(baseURL + "ObtenerMovimientosPorArticuloYTipo?idArticulo=" + idArticulo + "&tipoMovimiento=" + tipoMovimiento));
+                    new Uri(baseURL + "ObtenerMovimientosPorArticuloYTipo?idArticulo=" + idArticulo + "&tipoMovimiento=" + tipoMovimiento + "/page/" + actualPage));
                 Task<HttpResponseMessage> respuesta = cliente.SendAsync(solicitud);
                 respuesta.Wait();
                 if (respuesta.Result.IsSuccessStatusCode)
@@ -266,5 +269,46 @@ namespace Deposito.Presentacion.Controllers
         }
 
         #endregion
+        [HttpPost]
+        public ActionResult Next()
+        {
+            try
+            {
+                string message = "";
+                actualPage++;
+                if (actualPage < 1)
+                {
+                    actualPage = 1;
+                    message = "Only postive numbers allowed";
+                }
+
+                return RedirectToAction("Index", new { message = message });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Search", "Home", new { searchValue = "404notFound" });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Previous()
+        {
+            try
+            {
+                string message = "";
+                actualPage--;
+                if (actualPage < 1)
+                {
+                    actualPage = 1;
+                    message = "Only postive numbers allowed";
+                }
+
+                return RedirectToAction("Index", new { message = message });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Search", "Home", new { searchValue = "404notFound" });
+            }
+        }
     }
 }
