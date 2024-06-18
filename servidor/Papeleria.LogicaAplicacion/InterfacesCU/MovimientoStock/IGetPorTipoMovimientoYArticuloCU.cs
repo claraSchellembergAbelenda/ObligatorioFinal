@@ -9,6 +9,6 @@ namespace Papeleria.LogicaAplicacion.InterfacesCU.MovimientoStock
 {
     public interface IGetPorTipoMovimientoYArticuloCU
     {
-        public IEnumerable<MovimientoStockDTO> GetPorTipoMovimientoYArticulo(int idArticulo, string tipo);
+        public IEnumerable<MovimientoStockDTO> GetPorTipoMovimientoYArticulo(int idArticulo, string tipo, int numeroDePagina);
     }
 }

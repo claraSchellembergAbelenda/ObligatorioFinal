@@ -9,6 +9,6 @@ namespace Papeleria.LogicaAplicacion.InterfacesCU.MovimientoStock
 {
     public interface IGetArticuloPorFechaMovimiento
     {
-        public IEnumerable<ArticuloDTO> GetArticuloPorFechas(DateTime f1, DateTime f2);
+        public IEnumerable<ArticuloDTO> GetArticuloPorFechas(DateTime f1, DateTime f2, int numeroDePagina);
     }
 }

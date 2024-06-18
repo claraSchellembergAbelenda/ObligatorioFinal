@@ -22,21 +22,29 @@ namespace Papeleria.AccesoDatos.EntityFramework.Repositorios
             this._context = new PapeleriaContext();
         }
 
-        public IEnumerable<MovimientoStock> GetPorTipoYArticulo(int idArticulo, string tipo)
+        public IEnumerable<MovimientoStock> GetPorTipoYArticulo(int idArticulo, string tipo, int numeroDePagina, int tamañoPagina)
         {
             return _context.MovimientosStock
                             .Where(ms => ms.articuloMovidoId == idArticulo && ms.tipoMovimiento.nombreMovimiento.Equals(tipo))
                             .OrderByDescending(ms => ms.fechaYHora)
                             .ThenBy(ms => ms.cantUnidadesMovidas)
-                            .Include(ms => ms.tipoMovimiento);
+                            .Include(ms => ms.tipoMovimiento)
+                            .Skip((numeroDePagina - 1) * tamañoPagina)
+                            .Take(tamañoPagina)
+                            .ToList();
+
 
         }
 
-        public IEnumerable<Articulo> GetArticuloPorFechaMovimiento(DateTime f1, DateTime f2)
+        public IEnumerable<Articulo> GetArticuloPorFechaMovimiento(DateTime f1, DateTime f2, int numeroDePagina, int tamañoPagina)
         {
             return _context.MovimientosStock.Where(mv => EF.Functions.DateDiffDay(f1, mv.fechaYHora) >= 0 && EF.Functions.DateDiffDay(mv.fechaYHora, f2) >= 0)
                 .Include(mv => mv.articuloMovido)
-                .Select(a => a.articuloMovido);
+                .Select(a => a.articuloMovido)
+                .Distinct() 
+                .Skip((numeroDePagina - 1) * tamañoPagina)
+                .Take(tamañoPagina)
+                .ToList();
         }
 
 

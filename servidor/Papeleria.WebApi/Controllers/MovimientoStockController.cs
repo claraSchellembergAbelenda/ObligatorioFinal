@@ -52,7 +52,7 @@ namespace Papeleria.WebApi.Controllers
             
         }
 
-
+        [HttpGet("Page/{pageNumber}")]
         [HttpGet("ObtenerMovimientosPorArticuloYTipo")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -60,8 +60,12 @@ namespace Papeleria.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 
-        public ActionResult ObtenerMovimientosPorArticuloYTipo(int idArticulo, string tipoMovimiento)
+        public ActionResult ObtenerMovimientosPorArticuloYTipo(int idArticulo, string tipoMovimiento, int numeroDePagina, int tamañoPagina)
         {
+            if (numeroDePagina < 1 || tamañoPagina < 1)
+            {
+                return BadRequest("Corrija los settings: numero de pagina y tamaño debe ser positivo");
+            }
             try
             {
                 TipoMovimientoDTO tipo = _findTipoMovimientoByNameCU.FindTipoMovimientoByName(tipoMovimiento);
@@ -70,7 +74,12 @@ namespace Papeleria.WebApi.Controllers
                     ArticuloDTO art =_findArticuloByIdCU.EncontrarPorIdArticulo(idArticulo);
                     if (art != null)
                     {
-                        return Ok(_getMovimientosPorTipo.GetPorTipoMovimientoYArticulo(idArticulo, tipoMovimiento));
+                        var movimientos = _getMovimientosPorTipo.GetPorTipoMovimientoYArticulo(idArticulo, tipoMovimiento, numeroDePagina);
+                        if (!movimientos.Any())
+                        {
+                            return NoContent();
+                        }
+                        return Ok(movimientos);
                     }
                     else
                     {
@@ -93,7 +102,7 @@ namespace Papeleria.WebApi.Controllers
         }
 
 
-
+        
         [HttpGet("Filtrar")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -102,8 +111,12 @@ namespace Papeleria.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 
        
-        public ActionResult GetArticulosPorFecha(string fechaInicio, string fechaFin)
+        public ActionResult GetArticulosPorFecha(string fechaInicio, string fechaFin, int numeroDePagina)
         {
+            if (numeroDePagina < 1)
+            {
+                return BadRequest("Pagina debe ser cero o mas.");
+            }
             try
             {
                 DateTime inicio, fin;
@@ -113,8 +126,12 @@ namespace Papeleria.WebApi.Controllers
                 fin = DateTime.ParseExact(fechaFin, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
 
 
-                var articulos = _getArticuloPorFechaMovimiento.GetArticuloPorFechas(inicio, fin);
+                var articulos = _getArticuloPorFechaMovimiento.GetArticuloPorFechas(inicio, fin, numeroDePagina);
 
+                if (!articulos.Any())
+                {
+                    return NoContent();
+                }
                 return Ok(articulos);
 
             }
