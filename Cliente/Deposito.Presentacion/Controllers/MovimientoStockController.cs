@@ -89,6 +89,7 @@ namespace Deposito.Presentacion.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(MovimientoStockModel movimiento)
         {
+
             try
             {
                 HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Post, new Uri("https://localhost:44388/api/MovimientoStock"));
@@ -178,7 +179,7 @@ namespace Deposito.Presentacion.Controllers
                 }
                 string inicio = f1.ToString("dd-MM-yyyy");
                 string fin = f2.ToString("dd-MM-yyyy");
-                HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Get, new Uri(baseURL + "Filtrar?fechaInicio=" + inicio +"&fechafin="+ fin + "/page/" + actualPage));
+                HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Get, new Uri(baseURL + "Filtrar?fechaInicio=" + inicio +"&fechafin="+ fin/* + "/page/" + actualPage*/));
                 Task<HttpResponseMessage> respuesta = cliente.SendAsync(solicitud);
                 respuesta.Wait();
                 if (respuesta.Result.IsSuccessStatusCode)
@@ -217,7 +218,7 @@ namespace Deposito.Presentacion.Controllers
                 }
 
                 HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Get,
-                    new Uri(baseURL + "ObtenerMovimientosPorArticuloYTipo?idArticulo=" + idArticulo + "&tipoMovimiento=" + tipoMovimiento + "/page/" + actualPage));
+                    new Uri(baseURL + "ObtenerMovimientosPorArticuloYTipo?idArticulo=" + idArticulo + "&tipoMovimiento=" + tipoMovimiento /*+ "/page/" + actualPage*/));
                 Task<HttpResponseMessage> respuesta = cliente.SendAsync(solicitud);
                 respuesta.Wait();
                 if (respuesta.Result.IsSuccessStatusCode)
