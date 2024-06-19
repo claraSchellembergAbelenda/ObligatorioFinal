@@ -77,7 +77,7 @@ namespace Papeleria.AccesoDatos.EntityFramework.Repositorios
                 throw e;
             }
         }
-
+        
         public bool Update(TipoMovimiento aModificar)
         {
             try

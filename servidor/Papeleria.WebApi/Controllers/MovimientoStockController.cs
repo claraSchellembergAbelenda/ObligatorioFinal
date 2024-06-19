@@ -60,6 +60,7 @@ namespace Papeleria.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 
+
         public ActionResult ObtenerMovimientosPorArticuloYTipo(int idArticulo, string tipoMovimiento, int numeroDePagina, int tamañoPagina)
         {
             if (numeroDePagina < 1 || tamañoPagina < 1)

@@ -39,12 +39,12 @@ namespace Deposito.Presentacion.Controllers
             {
                 var objetoComoTexto = respuesta.Result.Content.ReadAsStringAsync().Result;
                 var user = JsonConvert.DeserializeObject<TokenModel>(objetoComoTexto);
-                HttpContext.Session.SetString("email",email );
+                HttpContext.Session.SetString("email",email);
                 HttpContext.Session.SetString("token", user.Token);
 
                 return RedirectToAction("Index", "Home", new { message = "Login realizado correctamente"});
             }
-            return RedirectToAction("Index", "Home", new { message = "email o contraseña incorrecta, por favor trate de vuelta" });
+            return RedirectToAction("Login", "Home", new { message = "email o contraseña incorrecta, por favor trate de vuelta" });
         }
 
         public IActionResult Logout()
@@ -53,8 +53,9 @@ namespace Deposito.Presentacion.Controllers
             HttpContext.Session.SetString("token", "");
             return RedirectToAction("Login");
         }
-        public IActionResult Index()
+        public IActionResult Index(string message)
         {
+            ViewBag.Message = message;
             return View();
         }
 

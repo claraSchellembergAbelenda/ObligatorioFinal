@@ -100,9 +100,6 @@ namespace Papeleria.WebApi.Controllers
                 var aEliminar = _findTipoMovimientoCU.FindTipoMovimiento(id);
                 string tipo = aEliminar.nombreMovimiento;
 
-
-
-
                 if (_existeTipoCU.ExisteTipo(tipo))
                 {
                     return BadRequest("No puede eliminar un tipo de movimiento en uso");
@@ -129,15 +126,18 @@ namespace Papeleria.WebApi.Controllers
 
         
         [HttpPut("{tipoMovimientoId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<TipoMovimientoDTO> Update([FromBody]TipoMovimientoDTO dto)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<TipoMovimientoDTO> Update([FromBody]TipoMovimientoDTO dto, int tipoMovimientoId)
         {
             try
             {
-
+                if(dto.id == 0)
+                {
+                    dto.id = tipoMovimientoId;
+                }
                 this._updateTipoMovimientoCU.UpdateTipoMoviento(dto);
-
-
 
                 return Ok();
             }

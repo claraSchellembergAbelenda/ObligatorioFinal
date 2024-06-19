@@ -34,6 +34,7 @@ namespace Papeleria.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 
         public ActionResult<UsuarioDTO> Login([FromBody] LoginDTO loginDTO)
@@ -42,16 +43,17 @@ namespace Papeleria.WebApi.Controllers
             {
                 ManejadorJWT handler = new ManejadorJWT(_findUserByMailCU);
                 var usr = handler.ObtenerUsuario(loginDTO.email);
-                if (_loginUsuario.LoginUsuario(loginDTO.email, loginDTO.password) == null)
+                UsuarioDTO logueado = _loginUsuario.LoginUsuario(loginDTO.email, loginDTO.password);
+                if (logueado == null)
                 {
                     return Unauthorized("Credenciales invalidas. Por favor reintente");
                 }
                 //HttpContext.Session.SetString("email", loginDTO.email);
-
-                //if(usr==null || usr.password!= loginDTO.password)
-                //{
-                //    return Unauthorized("Credenciales invalidas. Por favor reintente");
-                //}
+                if (logueado.esEncargado == false)
+                {
+                    return Unauthorized("solo los encargados pueden hacer login en esta plataforma");
+                }
+                
                 var token = ManejadorJWT.GenerarToken(usr);
                 return Ok(new
                 {

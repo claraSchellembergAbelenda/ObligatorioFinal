@@ -10,6 +10,7 @@ namespace Deposito.Presentacion.Controllers
 {
     public class MovimientoStockController : Controller
     {
+
         private HttpClient cliente;
         private string baseURL;
         private static int actualPage;
@@ -42,6 +43,10 @@ namespace Deposito.Presentacion.Controllers
         {
             try
             {
+                if (!ValidarUsuario())
+                {
+                    return RedirectToAction("Index", "Home", ViewBag.ErrorMessage = new { message = "Usted no esta autenticado, por favor inicie sesion" });
+                }
                 HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Get, new Uri("https://localhost:44388/api/TipoMovimiento"));
                 Task<HttpResponseMessage> respuesta = cliente.SendAsync(solicitud);
                 respuesta.Wait();
@@ -80,8 +85,6 @@ namespace Deposito.Presentacion.Controllers
             }
 
             return View();
-
-
 
 
         }
@@ -163,8 +166,13 @@ namespace Deposito.Presentacion.Controllers
 
         //}
 
-        public ActionResult GetMovimientosPorFechas()
+        public ActionResult GetMovimientosPorFechas(string message)
         {
+            ViewBag.Message = message;
+            if (!ValidarUsuario())
+            {
+                return RedirectToAction("Index", "Home", new { message = "Usted no esta autenticado, por favor inicie sesion" });
+            }
             return View();
         }
         [HttpPost]
@@ -179,7 +187,7 @@ namespace Deposito.Presentacion.Controllers
                 }
                 string inicio = f1.ToString("dd-MM-yyyy");
                 string fin = f2.ToString("dd-MM-yyyy");
-                HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Get, new Uri(baseURL + "Filtrar?fechaInicio=" + inicio +"&fechafin="+ fin/* + "/page/" + actualPage*/));
+                HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Get, new Uri(baseURL + "Filtrar?fechaInicio=" + inicio +"&fechafin="+ fin + "&numeroDePagina=" + actualPage));
                 Task<HttpResponseMessage> respuesta = cliente.SendAsync(solicitud);
                 respuesta.Wait();
                 if (respuesta.Result.IsSuccessStatusCode)
@@ -201,6 +209,10 @@ namespace Deposito.Presentacion.Controllers
         public ActionResult GetMovimientosPorId(string message)
         {
             ViewBag.message = message;
+            if (!ValidarUsuario())
+            {
+                return RedirectToAction("Index", "Home", new { message = "Usted no esta autenticado, por favor inicie sesion" });
+            }
             return View();
         }
 
@@ -218,7 +230,9 @@ namespace Deposito.Presentacion.Controllers
                 }
 
                 HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Get,
-                    new Uri(baseURL + "ObtenerMovimientosPorArticuloYTipo?idArticulo=" + idArticulo + "&tipoMovimiento=" + tipoMovimiento /*+ "/page/" + actualPage*/));
+                    new Uri(baseURL + "ObtenerMovimientosPorArticuloYTipo?idArticulo=" + idArticulo + "&tipoMovimiento=" + tipoMovimiento 
+                    + "&numeroDePagina=" + actualPage + "&tamañoPagina=" + 30));
+
                 Task<HttpResponseMessage> respuesta = cliente.SendAsync(solicitud);
                 respuesta.Wait();
                 if (respuesta.Result.IsSuccessStatusCode)
@@ -245,10 +259,15 @@ namespace Deposito.Presentacion.Controllers
 
         #region GetResumenMovimientoPorAño
 
-        public ActionResult GetResumenMovimientoPorAñoYTipo()
+        public ActionResult GetResumenMovimientoPorAñoYTipo(string message)
         {
             try
             {
+                ViewBag.Message = message;
+                if (!ValidarUsuario())
+                {
+                    return RedirectToAction("Index", "Home", new { message = "Usted no esta autenticado, por favor inicie sesion" });
+                }
                 HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Get,
                    new Uri(baseURL + "GetMovementsByYearAndType"));
                 Task<HttpResponseMessage> respuesta = cliente.SendAsync(solicitud);
@@ -261,11 +280,11 @@ namespace Deposito.Presentacion.Controllers
                     return View(ResumenMovimientos);
                 }
 
-                return RedirectToAction("Index", "Home", new { mensaje = "Algo sucedio mal, por favor trate de vuelta" });
+                return RedirectToAction("Index", "Home", new { message = "Algo sucedio mal, por favor trate de vuelta" });
             }
             catch (Exception e)
             {
-                return RedirectToAction("Index", "Home", new { mensaje = e.Message });
+                return RedirectToAction("Index", "Home", new { message = e.Message });
             }
         }
 

@@ -28,11 +28,12 @@ namespace Papeleria.AccesoDatos.EntityFramework.Repositorios
                             .Where(ms => ms.articuloMovidoId == idArticulo && ms.tipoMovimiento.nombreMovimiento.Equals(tipo))
                             .OrderByDescending(ms => ms.fechaYHora)
                             .ThenBy(ms => ms.cantUnidadesMovidas)
+                            .Include(ms => ms.usuario)
                             .Include(ms => ms.tipoMovimiento)
+                            .Include(ms => ms.articuloMovido)
                             .Skip((numeroDePagina - 1) * tamañoPagina)
                             .Take(tamañoPagina)
                             .ToList();
-
 
         }
 
