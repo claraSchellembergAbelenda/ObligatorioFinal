@@ -1,9 +1,20 @@
 var builder = WebApplication.CreateBuilder(args);
 
+
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddSession();
+builder.Services.AddSession(option =>
+{
+    option.IdleTimeout = TimeSpan.FromSeconds(5000);
+    option.Cookie.HttpOnly = true;
+    option.Cookie.IsEssential = true;
+}
+);
+
+
+builder.Services.AddDistributedMemoryCache();
 
 var app = builder.Build();
 

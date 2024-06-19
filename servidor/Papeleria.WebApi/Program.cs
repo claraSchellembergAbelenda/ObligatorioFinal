@@ -84,8 +84,14 @@ namespace Papeleria.WebApi
             builder.Services.AddScoped<IGetAllMovimientosCU, GetAllMovimientosCU>();
             builder.Services.AddScoped<IEncontrarUsuarioPorIdCU,  EncontrarUsuarioPorIdCU>();
 
+
+
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+
+
             builder.Services.AddEndpointsApiExplorer();
 
             var Clave = "+5/68cZ8hG3J1FJ0HgJQ0zZhxh9eNufp0uF2+R5Fnqw=\r\n";
@@ -122,8 +128,8 @@ namespace Papeleria.WebApi
                         opciones.IncludeXmlComments(ruta);
                         opciones.SwaggerDoc("v1", new OpenApiInfo
                         {
-                            Title = "Documentacion XML de obligatorio M3C 2024",
-                            Description = "Aplicacion web para poder exonerar la materia :)",
+                            Title = "Obligatorio Schellemberg Barthe M3C 2024",
+                            Description = "Aplicacion web para poder exonerar la materia(o morir en el intento) :)",
                             Contact = new OpenApiContact
                             {
                                 Email = "clarasche@gmail.com"
@@ -150,6 +156,7 @@ namespace Papeleria.WebApi
 
             app.UseAuthentication();
             app.UseAuthorization();
+
 
 
             app.MapControllers();

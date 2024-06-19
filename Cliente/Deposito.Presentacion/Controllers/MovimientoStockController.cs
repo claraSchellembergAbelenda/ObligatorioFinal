@@ -73,8 +73,8 @@ namespace Deposito.Presentacion.Controllers
                 if (respuesta.Result.IsSuccessStatusCode)
                 {
                     var objetoComoTexto = respuesta.Result.Content.ReadAsStringAsync().Result;
-                    var tipos = JsonConvert.DeserializeObject<IEnumerable<ArticuloModel>>(objetoComoTexto);
-                    ViewBag.Articulos = tipos;
+                    var articulos = JsonConvert.DeserializeObject<IEnumerable<ArticuloModel>>(objetoComoTexto);
+                    ViewBag.Articulos = articulos;
 
                 }
 
@@ -95,6 +95,7 @@ namespace Deposito.Presentacion.Controllers
 
             try
             {
+                movimiento.encargadoEmail = HttpContext.Session.GetString("email").ToString();
                 HttpRequestMessage solicitud = new HttpRequestMessage(HttpMethod.Post, new Uri("https://localhost:44388/api/MovimientoStock"));
                 string json = JsonConvert.SerializeObject(movimiento);
                 HttpContent contenido = new StringContent(json, Encoding.UTF8, "application/json");

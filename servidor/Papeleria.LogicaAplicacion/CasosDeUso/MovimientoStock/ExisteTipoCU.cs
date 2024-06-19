@@ -15,7 +15,7 @@ namespace Papeleria.LogicaAplicacion.CasosDeUso.MovimientoStock
         {
             _repoMovimientoStock = repoMovimientoStock;
         }
-        public bool ExisteTipo(string tipo)
+        public bool ExisteTipo(int tipo)
         {
             return _repoMovimientoStock.ExisteTipo(tipo);
         }

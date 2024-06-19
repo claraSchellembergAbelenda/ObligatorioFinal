@@ -24,7 +24,7 @@ namespace Papeleria.LogicaAplicacion.CasosDeUso.TipoMovimiento
         public void UpdateTipoMoviento(TipoMovimientoDTO dto)
         {
             LogicaNegocios.Entidades.TipoMovimiento tipo = TipoMovimientoDtoMapper.FromDto(dto);
-            if(_repositorioMovimientoStock.ExisteTipo(tipo.nombreMovimiento))
+            if(_repositorioMovimientoStock.ExisteTipo(tipo.id))
             {
                 throw new TipoMovimientoNoValidoException("No puede editar un tipo de movimiento que esta en uso");
             }

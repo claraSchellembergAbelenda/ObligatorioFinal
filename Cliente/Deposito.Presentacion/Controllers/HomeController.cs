@@ -39,7 +39,7 @@ namespace Deposito.Presentacion.Controllers
             {
                 var objetoComoTexto = respuesta.Result.Content.ReadAsStringAsync().Result;
                 var user = JsonConvert.DeserializeObject<TokenModel>(objetoComoTexto);
-                HttpContext.Session.SetString("email",email);
+                HttpContext.Session.SetString("email",user.Usuario.email);
                 HttpContext.Session.SetString("token", user.Token);
 
                 return RedirectToAction("Index", "Home", new { message = "Login realizado correctamente"});

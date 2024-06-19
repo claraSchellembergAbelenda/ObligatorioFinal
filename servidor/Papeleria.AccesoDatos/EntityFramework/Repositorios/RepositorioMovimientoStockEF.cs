@@ -28,7 +28,7 @@ namespace Papeleria.AccesoDatos.EntityFramework.Repositorios
                             .Where(ms => ms.articuloMovidoId == idArticulo && ms.tipoMovimiento.nombreMovimiento.Equals(tipo))
                             .OrderByDescending(ms => ms.fechaYHora)
                             .ThenBy(ms => ms.cantUnidadesMovidas)
-                            .Include(ms => ms.usuario)
+                            .Include(ms => ms.encargadoEmail)
                             .Include(ms => ms.tipoMovimiento)
                             .Include(ms => ms.articuloMovido)
                             .Skip((numeroDePagina - 1) * tamañoPagina)
@@ -60,7 +60,6 @@ namespace Papeleria.AccesoDatos.EntityFramework.Repositorios
             {
                 aAgregar.EsValido();
                 this._context.Entry(aAgregar.articuloMovido).State = EntityState.Unchanged;
-                this._context.Entry(aAgregar.usuario).State = EntityState.Unchanged;
                 this._context.Entry(aAgregar.tipoMovimiento).State = EntityState.Unchanged;
                 _context.MovimientosStock.Add(aAgregar);
                 _context.SaveChanges();
@@ -95,9 +94,9 @@ namespace Papeleria.AccesoDatos.EntityFramework.Repositorios
         {
             throw new NotImplementedException();
         }
-        public bool ExisteTipo(string tipo) {
+        public bool ExisteTipo(int tipoId) {
 
-            if(_context.MovimientosStock.Any(m => m.tipoMovimiento.nombreMovimiento == tipo))
+            if(_context.MovimientosStock.Any(m => m.tipoMovimiento.id == tipoId))
             {
                 return true;
             }

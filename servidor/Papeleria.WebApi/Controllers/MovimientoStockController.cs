@@ -31,13 +31,15 @@ namespace Papeleria.WebApi.Controllers
         private ICrearMovimientoStockCU _crearMovimientoStockCU;
         private IFindTipoMovimientoByNameCU _findTipoMovimientoByNameCU;
         private IGetAllMovimientosCU _getAllMovimientosCU;
+        private IEncontrarUsuarioPorEmailCU _encontrarUsuarioPorEmail;
 
 
         public MovimientoStockController(IGetPorTipoMovimientoYArticuloCU getMovimientos, 
             IGetArticuloPorFechaMovimiento getArticuloPorFechaMovimiento, 
             IGetResumeByYearAndTypeUC getResumeByYearAndTypeUC, IExisteTipoCU existeTipoMovimientoCU,
             IFindByIDArticuloCU findByIDArticuloCU,  ICrearMovimientoStockCU crearMovimientoStockCU, IFindTipoMovimientoCU findTipoMovimientoCU,
-            IFindTipoMovimientoByNameCU findTipoMovimientoByNameCU, IGetAllMovimientosCU getAllMovimientosCU, IEncontrarUsuarioPorIdCU encontrarUsuarioPorIdCU)
+            IFindTipoMovimientoByNameCU findTipoMovimientoByNameCU, IGetAllMovimientosCU getAllMovimientosCU, IEncontrarUsuarioPorIdCU encontrarUsuarioPorIdCU,
+            IEncontrarUsuarioPorEmailCU encontrarUsuarioPorEmailCU)
         {
             _getMovimientosPorTipo = getMovimientos;
             _getArticuloPorFechaMovimiento = getArticuloPorFechaMovimiento;
@@ -49,7 +51,9 @@ namespace Papeleria.WebApi.Controllers
             _getAllMovimientosCU = getAllMovimientosCU;
             _findTipoMovimientoCU = findTipoMovimientoCU;
             _encontrarUsuarioPorIdCU = encontrarUsuarioPorIdCU;
-            
+            _encontrarUsuarioPorEmail = encontrarUsuarioPorEmailCU;
+
+
         }
 
         [HttpGet("Page/{pageNumber}")]
@@ -183,8 +187,7 @@ namespace Papeleria.WebApi.Controllers
             {
                 dto.articuloMovido = _findArticuloByIdCU.EncontrarPorIdArticulo(dto.articuloMovidoId);
                 dto.tipoMovimiento = _findTipoMovimientoCU.FindTipoMovimiento(dto.tipoMovimientoId);
-                dto.usuario = _encontrarUsuarioPorIdCU.EncontrarUsuarioPorId(dto.usuarioId);
-
+                
                 _crearMovimientoStockCU.CrearMovimiento(dto);
                 return Created("api/MovimientoStock", dto);
             }

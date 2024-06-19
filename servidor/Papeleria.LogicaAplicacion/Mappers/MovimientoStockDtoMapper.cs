@@ -24,10 +24,11 @@ namespace Papeleria.LogicaAplicacion.Mappers
             {
                 throw new MovimientoStockNoValidoException("Articulo es null");
             }
-            Usuario u = UsuarioDtoMapper.FromDto(dto.usuario);
+            //Usuario u = UsuarioDtoMapper.FromDto(dto.usuario);
+            
             Articulo a = ArticuloDtoMapper.FromDto(dto.articuloMovido);
             TipoMovimiento tp = TipoMovimientoDtoMapper.FromDto(dto.tipoMovimiento);
-            MovimientoStock nuevo = new MovimientoStock(dto.id, dto.fechaYHora, a, tp, u, dto.cantUnidadesMovidas);
+            MovimientoStock nuevo = new MovimientoStock(dto.id, dto.fechaYHora, a, tp, dto.encargadoEmail,  dto.cantUnidadesMovidas);
 
             return nuevo;
         }

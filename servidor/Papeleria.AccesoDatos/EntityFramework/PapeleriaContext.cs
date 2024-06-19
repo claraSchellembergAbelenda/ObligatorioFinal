@@ -33,10 +33,7 @@ namespace Papeleria.AccesoDatos.EntityFramework
                 .WithMany()
                 .HasForeignKey(m => m.tipoMovimientoId);
 
-            modelBuilder.Entity<MovimientoStock>()
-                .HasOne(m => m.usuario)
-                .WithMany()
-                .HasForeignKey(m => m.usuarioId);
+            
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

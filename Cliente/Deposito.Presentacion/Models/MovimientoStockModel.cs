@@ -12,9 +12,8 @@ namespace Deposito.Presentacion.Models
         public int tipoMovimientoId { get; set; }
 
         public TipoMovimientoModel? tipoMovimiento { get; set; }
-        public int usuarioId { get; set; }
+        public string encargadoEmail { get; set; }
 
-        public UsuarioModel? usuario { get; set; }
         public int cantUnidadesMovidas { get; set; }
 
     }

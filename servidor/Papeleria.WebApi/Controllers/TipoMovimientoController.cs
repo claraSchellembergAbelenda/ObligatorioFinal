@@ -100,7 +100,7 @@ namespace Papeleria.WebApi.Controllers
                 var aEliminar = _findTipoMovimientoCU.FindTipoMovimiento(id);
                 string tipo = aEliminar.nombreMovimiento;
 
-                if (_existeTipoCU.ExisteTipo(tipo))
+                if (_existeTipoCU.ExisteTipo(id))
                 {
                     return BadRequest("No puede eliminar un tipo de movimiento en uso");
                 }

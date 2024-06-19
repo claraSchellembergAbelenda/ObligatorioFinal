@@ -8,6 +8,6 @@ namespace Papeleria.LogicaAplicacion.InterfacesCU.MovimientoStock
 {
     public interface IExisteTipoCU
     {
-        public bool ExisteTipo(string tipo);
+        public bool ExisteTipo(int tipoId);
     }
 }
